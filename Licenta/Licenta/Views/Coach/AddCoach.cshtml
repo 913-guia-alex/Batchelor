@@ -1,0 +1,71 @@
+﻿@using Licenta.Models
+
+@{
+    ViewBag.Title = "Add New Coach";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Coach</title>
+    <style>
+        input {
+            width: 190px;
+            font-size: 16px;
+            height: 28px;
+            padding: 2px;
+            margin: 3px;
+            border: solid;
+            border-color: indigo;
+            border-radius: 4px;
+            border-width: 2px;
+            margin-left: 72px;
+        }
+
+        form {
+            padding: 2px;
+        }
+
+        button {
+            width: 160px;
+            height: 45px;
+            color: white;
+            background-color: forestgreen;
+            border-radius: 6px;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form action="/Coach/SaveAddedCoach" method="POST" enctype="multipart/form-data">
+            Name : <input type="text" id="IDname" name="name" /> <br />
+            Age : <input type="number" id="IDage" name="age" min="18" max="100" /> <br />
+            Gender : <select name="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select><br />
+            Trainer Type : <input type="text" id="IDtrainerType" name="trainerType" /> <br />
+            Phone Number : <input type="text" id="IDphoneNumber" name="phoneNumber" /> <br />
+            Email : <input type="email" id="IDemail" name="email" /> <br />
+            Photo : <input type="file" id="IDphoto" name="photo" accept="image/*" />
+
+            Gym :
+            <select name="idg">
+                @foreach (var gym in ViewBag.Gyms)
+                {
+                    <option value="@gym.idg">@gym.name</option>
+                }
+            </select><br />
+
+            <div>
+                <button type="submit">Add Coach</button>
+                <button type="reset" onclick="window.location.href='/Coach/Coaches'">Cancel</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+

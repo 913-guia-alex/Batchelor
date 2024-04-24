@@ -1,0 +1,98 @@
+﻿@model Licenta.Models.CaloriesCalculator
+
+@{
+    ViewBag.Title = "Calories";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>Welcome to the Calories Calculator. Please insert the necessary attributes to calculate your necessary calories</title>
+    <style>
+        .button-container {
+            margin-top: 20px;
+            margin-left: 40px;
+        }
+
+        .btn {
+            margin-right: 10px;
+        }
+
+        h3 {
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .unit-label {
+            position: absolute;
+            top: 50%;
+            right: 1000px;
+            transform: translateY(-50%);
+            color: #999; /* Adjust color as needed */
+        }
+
+        .form-control {
+            padding-right: 60px; /* Adjust padding to accommodate the unit label */
+            border-radius: 13px !important; /* Remove button border-radius for a rectangular shape */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Calories Calculator</h3>
+
+        @using (Html.BeginForm("Calories", "Calculator", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Age)
+                @Html.TextBoxFor(m => m.Age, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Gender)
+                @Html.DropDownListFor(m => m.Gender, new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "Male", Value = "Male" },
+                    new SelectListItem { Text = "Female", Value = "Female" }
+                }, " ", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Height)
+                <div class="input-group">
+                    @Html.TextBoxFor(m => m.Height, new { @class = "form-control" })
+                    <span class="unit-label">cm</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Weight)
+                <div class="input-group">
+                    @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
+                    <span class="unit-label">kg</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Goal)
+                @Html.DropDownListFor(m => m.Goal, new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "Lose Weight", Value = "Lose Weight" },
+                    new SelectListItem { Text = "Maintain Weight", Value = "Maintain Weight" },
+                    new SelectListItem { Text = "Gain Weight", Value = "Gain Weight" }
+                }, " ", new { @class = "form-control" })
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Calculate Calories</button>
+            </div>
+        }
+    </div>
+</body>
+</html>

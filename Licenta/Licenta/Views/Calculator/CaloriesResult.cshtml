@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Calories Result";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <style>
+        .calories-result-page {
+            min-height: 100vh; /* Ensure the page takes up at least the full viewport height */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .calories-result-container {
+            max-width: 600px;
+            margin: 50px auto; /* Adjust margin as needed */
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .calories-result-header {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .result-container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .calories-info {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .calories-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .footer {
+            margin-top: auto; /* Push footer to the bottom */
+            text-align: center;
+            color: #666;
+            padding: 20px 0; /* Add padding to footer */
+        }
+
+        /* Go back arrow styles */
+        .go-back-arrow {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #007bff; /* Adjust color as needed */
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body class="calories-result-page">
+    <div class="calories-result-container">
+        <h3 class="calories-result-header">Calories Result</h3>
+
+        <div class="result-container">
+            <p class="calories-info">Your necessary calories:</p>
+            <p class="calories-value">@ViewBag.Calories</p>
+        </div>
+
+        <!-- Email form -->
+        <div class="email-form-container">
+            <form method="post" action="@Url.Action("SendEmailWithPDF")">
+                <label for="email">Enter your email:</label>
+                <input type="email" id="email" name="email" required>
+                <button type="submit">Send PDF</button>
+            </form>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <p>Thank you for using our Calories Calculator!</p>
+    </footer>
+
+    <a href="@Url.Action("Calories", "Calculator")" class="go-back-arrow">&#8592; Go Back</a>
+
+</body>
+</html>

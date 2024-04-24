@@ -1,0 +1,95 @@
+﻿
+@model Licenta.Models.Coach
+@{
+    ViewBag.Title = "Update Coach";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>Update Coach</title>
+    <style>
+        input {
+            width: 190px;
+            font-size: 16px;
+            height: 28px;
+            padding: 2px;
+            margin: 3px;
+            border: solid;
+            border-color: indigo;
+            border-radius: 4px;
+            border-width: 2px;
+            margin-left: 72px;
+        }
+
+        form {
+            padding: 2px;
+        }
+
+        button {
+            width: 140px;
+            height: 38px;
+            color: white;
+            background-color: forestgreen;
+            border-radius: 6px;
+            margin: 5px;
+        }
+
+        .buttons {
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Update Coach</h3>
+
+    <form id="updateForm" action="@Url.Action("UpdateCoach", "Coach")" method="post" enctype="multipart/form-data">
+        @Html.HiddenFor(model => model.idco)
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="@Model.name" />
+        </div>
+        <div>
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" min="18" max="100" value="@Model.age" />
+        </div>
+        <div>
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="Male" @(Model.gender == "Male" ? "selected" : "")>Male</option>
+                <option value="Female" @(Model.gender == "Female" ? "selected" : "")>Female</option>
+                <option value="Other" @(Model.gender == "Other" ? "selected" : "")>Other</option>
+            </select>
+        </div>
+        <div>
+            <label for="trainerType">Trainer Type:</label>
+            <input type="text" id="trainerType" name="trainerType" value="@Model.trainerType" />
+        </div>
+        <div>
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" value="@Model.phoneNumber" />
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="@Model.email" />
+        </div>
+        <div>
+            <label for="photo">Photo:</label>
+            <input type="file" name="photo" />
+
+        </div>
+        <div class="buttons">
+            <button type="submit" value="Update">Update</button>
+            <button type="button" onclick="cancelUpdate()">Cancel</button>
+        </div>
+    </form>
+
+    <script>
+        function cancelUpdate() {
+            window.location.href = '/Coach/Coaches';
+        }
+    </script>
+
+</body>
+</html>

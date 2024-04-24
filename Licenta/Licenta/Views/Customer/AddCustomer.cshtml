@@ -1,0 +1,56 @@
+@{
+    ViewBag.Title = "AddNewCustomer";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Customer</title>
+    <style>
+        input {
+            width: 190px;
+            font-size: 16px;
+            height: 28px;
+            padding: 2px;
+            margin: 3px;
+            border: solid;
+            border-color: indigo;
+            border-radius: 4px;
+            border-width: 2px;
+            margin-left: 72px;
+        }
+
+        form {
+            padding: 2px;
+        }
+
+        button {
+            width: 160px;
+            height: 45px;
+            color: white;
+            background-color: forestgreen;
+            border-radius: 6px;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form action="/Customer/SaveAddedCustomer" method="GET">
+            Surname : <input type="text" id="IDsurname" name="surname" /> <br />
+            Lastname : <input type="text" id="IDlastname" name="lastname" /> <br />
+            Age : <input type="number" id="IDage" name="age" /> <br />
+            Gender : <input type="text" id="IDgender" name="gender" /> <br />
+            Email: <input type="text" id="IDemail" name="email"/> <br />
+            Password: <input type="text" id="IDpassword" name="password" /><br />
+
+            <div>
+                <button type="submit">Add Customer</button>
+                <button type="reset" onclick="window.location.href='Customers'">Cancel</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

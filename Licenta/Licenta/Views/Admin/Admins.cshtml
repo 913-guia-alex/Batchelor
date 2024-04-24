@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Admins";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>Admin Panel</title>
+    <style>
+        .admin-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .btn-group {
+            margin-top: 20px;
+        }
+
+        .btn {
+            margin: 10px;
+            border-radius: 13px !important;
+            position: relative;
+            display: inline-block;
+            width: 150px;
+            text-align: center;
+        }
+
+        /* Button styles */
+        /*.btn {
+            display: inline-block;
+            text-align: center;
+            margin: auto;
+            display: flex;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }*/
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff; /* White background */
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            text-align: left;
+            padding: 10px;
+            border-radius: 5px;
+            color: #000; /* Black text color */
+        }
+
+        .btn:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h3 style="text-align: center;">Admin Panel</h3>
+
+
+        @using (Html.BeginForm("Admins", "Admin", FormMethod.Post, new { onsubmit = "return validateForm();" }))
+        {
+            <div class="btn-group">
+                <a href="@Url.Action("Gyms", "Gym")" class="btn btn-primary">
+                    Manage Gyms
+                    <div class="dropdown-content">
+                        <p>Perform CRUD operations, search, and more for managing gyms. This includes adding, editing, and deleting gym information.</p>
+                    </div>
+                </a>
+
+                <a href="@Url.Action("Customers", "Customer")" class="btn btn-primary">
+                    Manage Customers
+                    <div class="dropdown-content">
+                        <p>Perform CRUD operations, search, and more for managing customers. This includes adding, editing, and deleting customer information.</p>
+                    </div>
+                </a>
+
+                <a href="@Url.Action("Coach", "Coaches")" class="btn btn-primary">
+                    Manage Coaches
+                    <div class="dropdown-content">
+                        <p>Perform CRUD operations, search, and more for managing coaches. This includes adding, editing, and deleting coach information.</p>
+                    </div>
+                </a>
+
+                <!-- "Go Back" button -->
+                <a href="@Url.Action("Login", "Authenticate")" class="btn btn-secondary">Go Back</a>
+            </div>
+        }
+    </div>
+</body>
+</html>

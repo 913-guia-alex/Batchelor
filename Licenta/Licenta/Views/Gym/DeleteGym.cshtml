@@ -1,0 +1,57 @@
+
+@model int?
+
+@{
+    ViewBag.Title = "DeleteGym";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>Delete Gym</title>
+
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        input {
+            background-color: forestgreen;
+            color: white;
+            border-radius: 5px;
+            height: 40px;
+            width: 120px;
+        }
+
+        button {
+            background-color: forestgreen;
+            color: white;
+            border-radius: 5px;
+            height: 40px;
+            width: 120px;
+            margin-left: 5px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+
+        <h3>Confirm Gym Deletion</h3>
+
+        <p>Are you sure you want to delete the gym with id: @Model</p>
+
+        <form action="@Url.Action("DeleteGym", "Gyms")" method="post">
+            @Html.Hidden("id", Model)
+            <input type="submit" value="Confirm" />
+            <button type="reset" onclick="window.location.href='../Gyms'">Cancel</button>
+        </form>
+    </div>
+</body>
+</html>

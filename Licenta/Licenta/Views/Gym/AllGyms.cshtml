@@ -1,0 +1,265 @@
+﻿@model List<Licenta.Models.Gym>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Gyms</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Add this style block in the head section of your HTML */
+        .btn-transition {
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-transition:hover {
+                background-color: forestgreen;
+                color: white;
+            }
+
+        /* Adjusted style for search bar alignment */
+        .search-container {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: flex-end; /* Align to the right */
+        }
+
+            .search-container input {
+                width: 200px; /* Adjust as needed */
+                margin-left: 10px;
+            }
+
+        .dropdown {
+            height: fit-content;
+            width: 100px;
+            position: absolute;
+            display: flex;
+            top: 65px; /* Adjusted top position */
+            left: 215px; /* Adjusted left position */
+            z-index: 1000; /* Ensure the dropdown is above other elements */
+        }
+
+
+        .dropdown-toggle {
+            background-color: #f1f1f1;
+            color: #333;
+            padding: .75rem 2.5rem;
+            border: none;
+            border-radius: .5rem;
+            cursor: pointer;
+            width: 150px;
+            display: flex;
+            align-items: center; /* Center items vertically */
+            justify-content: space-between; /* Add space between text and icon */
+        }
+
+            .dropdown-toggle span {
+                display: flex;
+                align-items: center; /* Center items vertically */
+            }
+
+            .dropdown-toggle i {
+                margin: 0.3rem; /* Adjust spacing between text and icon */
+            }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%; /* Adjusted position to be under the dropdown button */
+            left: 0; /* Adjusted position to be aligned with the left side */
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 1rem;
+            padding: 0;
+            list-style: none;
+            display: none;
+        }
+
+            .dropdown-menu .menu-item:first-child {
+                border-radius: 1rem 1rem 0 0;
+            }
+
+            .dropdown-menu .menu-item:last-child {
+                border-radius: 0 0 1rem 1rem;
+            }
+
+        .menu-items {
+            width: 170px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem; /* Adjusted padding */
+            background-color: white;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 13px !important; /* Remove button border-radius for a rectangular shape */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Filter Dropdown -->
+        <div class="dropdown">
+            <div class="dropdown-toggle" onclick="toggleDropdown()">
+                <span>
+                    <i class="fas fa-sort"></i> <!-- Sort icon -->
+                    Sort
+                </span>
+            </div>
+            <ul class="dropdown-menu" id="dropdownMenu">
+                <li class="menu-items" onclick="handleButtonClick('sortByRating')">
+                    <i class="fas fa-star"></i> <!-- Star icon -->
+                    SortByRating
+                </li>
+                <li class="menu-items" onclick="handleButtonClick('sortByName')">
+                    <i class="fas fa-sort-alpha-down"></i>
+                    SortByName
+                </li>
+            </ul>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search..." class="form-control">
+        </div>
+
+        <!-- Gym List Table -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Open Hour</th>
+                    <th>Close Hour</th>
+                    <th>Rating</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var gym in Model)
+                {
+                    <tr>
+                        <td>@gym.name</td>
+                        <td>@gym.adress</td>
+                        <td>@gym.openHour</td>
+                        <td>@gym.closeHour</td>
+                        <td>@((gym.rating != null) ? $"{gym.rating} / 5" : "N/A")</td>
+                        <td>
+                            <button class="btn btn-danger" onclick="deleteGym(@gym.idg)">Delete</button>
+                            <a href="/Gym/UpdateGymView?id=@gym.idg" class="btn btn-primary">Update</a>
+@*                            <li><a href="/Gym/Classes/@((int)ViewBag.Gym.idg)"><i class="fas fa-class"></i>Enroll in a class</a></li>
+*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+       @* <div class="row">
+            <div class="col-md-6">
+                <a href="/Gym/AddGym" class="btn btn-secondary btn-transition">Add a new gym</a>
+            </div>
+            <div class="col-md-6 text-md-right">
+                <a href="/Admin/Admins" class="btn btn-secondary btn-transition">Go Back</a>
+            </div>
+        </div>*@
+
+
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        function sortByRating() {
+            var rows = $("table tbody tr").get();
+
+            rows.sort(function (rowA, rowB) {
+                var ratingTextA = $(rowA).find("td:eq(5)").text();
+                var ratingTextB = $(rowB).find("td:eq(5)").text();
+
+                var partsA = ratingTextA.split('.'); // Split the rating into whole and fractional parts
+                var partsB = ratingTextB.split('.');
+
+                var wholeA = parseFloat(partsA[0]); // Parse the whole part
+                var wholeB = parseFloat(partsB[0]);
+
+                // If the whole parts are not equal, sort by whole parts
+                if (wholeB !== wholeA) {
+                    return wholeB - wholeA;
+                } else {
+                    // If the whole parts are equal, sort by fractional parts
+                    var fractionalA = parseFloat(partsA[1]);
+                    var fractionalB = parseFloat(partsB[1]);
+
+                    return fractionalB - fractionalA;
+                }
+            });
+
+            $.each(rows, function (index, row) {
+                $("table tbody").append(row);
+            });
+        }
+
+
+
+        // Function to sort gyms by name (alphabetically)
+        function sortByName() {
+            var rows = $("table tbody tr").get();
+
+            rows.sort(function (rowA, rowB) {
+                var nameA = $(rowA).find("td:eq(1)").text().toUpperCase(); // Extract name value from cell and convert to uppercase for case-insensitive comparison
+                var nameB = $(rowB).find("td:eq(1)").text().toUpperCase(); // Extract name value from cell and convert to uppercase for case-insensitive comparison
+
+                return nameA.localeCompare(nameB); // Sort alphabetically
+            });
+
+            $.each(rows, function (index, row) {
+                $("table tbody").append(row);
+            });
+        }
+
+        // Function to filter gyms based on search input
+        $(document).ready(function () {
+            $("#searchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("table tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        function deleteGym(gymId) {
+            $.ajax({
+                type: "POST",
+                url: "/Gym/DeleteGym",
+                data: { id: gymId },
+                success: function () {
+                    // Refresh the gym list (replace with your actual refresh logic)
+                    location.reload();
+                }
+            });
+        }
+
+        function toggleDropdown() {
+            var dropdownMenu = document.getElementById("dropdownMenu");
+            dropdownMenu.style.display = (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") ? "block" : "none";
+        }
+
+        function handleButtonClick(action) {
+            if (action === "sortByName") {
+                sortByName();
+            } else if (action === "sortByRating") {
+                sortByRating();
+            }
+        }
+    </script>
+
+</body>
+</html>
