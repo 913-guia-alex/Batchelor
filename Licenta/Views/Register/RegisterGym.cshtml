@@ -1,0 +1,90 @@
+﻿@model Licenta.Models.Gym
+
+@{
+    ViewBag.Title = "RegisterGym";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>Gym Registration</title>
+    <style>
+        .button-container {
+            margin-top: 20px;
+            margin-left: 40px;
+        }
+
+        .btn {
+            margin-right: 10px;
+        }
+
+        h3 {
+            margin-bottom: 25px;
+        }
+    </style>
+    <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("Password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h3>Please register your gym</h3>
+
+    @using (Html.BeginForm("RegisterGym", "Register", FormMethod.Post, new { onsubmit = "return validateForm();" }))
+    {
+        @Html.ValidationSummary(true)
+        <div class="container">
+            <div class="form-group">
+                @Html.LabelFor(m => m.name)
+                @Html.TextBoxFor(m => m.name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.name)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.adress)
+                @Html.TextBoxFor(m => m.adress, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.adress)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.openHour)
+                @Html.TextBoxFor(m => m.openHour, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.openHour)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.closeHour)
+                @Html.TextBoxFor(m => m.closeHour, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.closeHour)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.rating)
+                @Html.TextBoxFor(m => m.rating, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.rating)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.password)
+                @Html.PasswordFor(m => m.password, new { @class = "form-control", id = "Password" })
+                <input type="checkbox" onclick="togglePasswordVisibility()"> Show Password
+                @Html.ValidationMessageFor(m => m.password)
+            </div>
+
+            <!-- Add other registration data fields as needed -->
+
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Register</button>
+                @Html.ActionLink("Cancel", "Login", "Authenticate", null, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+    }
+</body>
+</html>

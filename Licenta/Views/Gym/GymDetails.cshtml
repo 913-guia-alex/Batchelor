@@ -1,0 +1,119 @@
+﻿@model Licenta.Models.Gym
+
+@{
+    ViewBag.Title = "Gym Details";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+<div class="container">
+    <h2 class="text-center">@Model.name Details</h2>
+
+    <div class="gym-info">
+        <div class="info-item">
+            <span class="info-label">Address:</span>
+            <span class="info-value">@Model.adress</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Opening Hour:</span>
+            <span class="info-value">@Model.openHour</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Closing Hour:</span>
+            <span class="info-value">@Model.closeHour</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Rating:</span>
+            <span class="info-value">@Model.rating</span>
+        </div>
+    </div>
+
+    <div class="gym-coaches">
+        <h3>Coaches</h3>
+        @if (ViewBag.Coaches != null && ViewBag.Coaches.Count > 0)
+        {
+            foreach (var coach in ViewBag.Coaches)
+            {
+                <div class="coach-card">
+                    <h4>@coach.name</h4>
+                    <p><strong>Age:</strong> @coach.age</p>
+                    <p><strong>Gender:</strong> @coach.gender</p>
+                    <p><strong>Trainer Type:</strong> @coach.trainerType</p>
+                    <p><strong>Phone Number:</strong> @coach.phoneNumber</p>
+                    <p><strong>Email:</strong> @coach.email</p>
+                    @if (HasPhoto(coach.photo))
+                    {
+                        <div>
+                            <!-- Displaying coach photo -->
+                            <img src="data:image;base64,@Convert.ToBase64String(coach.photo)" alt="Coach Photo" width="100" height="100" />
+                        </div>
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            <p>No coaches found for this gym.</p>
+        }
+    </div>
+</div>
+
+<style>
+    /* Add your CSS styles here */
+    .container {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .gym-info {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        text-align: center; /* Center text within gym-info */
+    }
+
+    .info-item {
+        margin-bottom: 15px;
+    }
+
+    .info-label {
+        font-weight: bold;
+    }
+
+    .info-value {
+        margin-left: 10px;
+    }
+
+    .gym-coaches .coach-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        width: calc(50% - 20px);
+    }
+
+        .gym-coaches .coach-card h4 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .gym-coaches .coach-card img {
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+</style>
+
+@functions {
+    // Helper function to check if the coach's photo is available
+    public bool HasPhoto(byte[] photo)
+    {
+        return photo != null && photo.Length > 0;
+    }
+}

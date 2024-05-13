@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "Admins";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .admin-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .dropdown-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            width: 250px; /* Adjust width as needed */
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            text-align: left;
+            padding: 10px;
+            border-radius: 5px;
+            color: #000;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-btn {
+            display: block;
+            margin: 20px auto; /* Center the button */
+            padding: 15px 30px; /* Adjust padding as needed */
+            border-radius: 30px !important;
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+            .dropdown-btn:hover {
+                background-color: #0056b3;
+            }
+
+            .dropdown-btn i {
+                margin-right: 10px;
+            }
+
+        .go-back-btn {
+            display: block;
+            margin-right: 400px; /* Move "Go Back" button to the left */
+            margin-bottom: 20px; /* Adjust margin as needed */
+            padding: 10px 20px;
+            border-radius: 5px !important; /* Reduced border-radius */
+            background-color: #ccc;
+            color: #535353;
+            text-decoration: none; /* Remove underline */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition */
+        }
+
+            .go-back-btn:hover {
+                background-color: #bbb; /* Darken the background color on hover */
+                transform: scale(1.05); /* Scale the button slightly on hover */
+            }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h3 style="text-align: center;">Admin Panel</h3>
+
+        <div class="dropdown-container">
+            <!-- "Go Back" button -->
+            <a href="@Url.Action("Login", "Authenticate")" class="go-back-btn"><i class="fas fa-arrow-left"></i> Go Back</a>
+
+            <div class="dropdown">
+                <button class="dropdown-btn"><i class="fas fa-cogs"></i> Manage Options</button>
+                <div class="dropdown-content">
+                    <a href="@Url.Action("Gyms", "Gym")" class="btn btn-primary">
+                        <i class="fas fa-dumbbell"></i> Manage Gyms
+                    </a>
+                    <a href="@Url.Action("Customers", "Customer")" class="btn btn-primary">
+                        <i class="fas fa-users"></i> Manage Customers
+                    </a>
+                    <a href="@Url.Action("Coach", "Coaches")" class="btn btn-primary">
+                        <i class="fas fa-user-tie"></i> Manage Coaches
+                    </a>
+                    <a href="@Url.Action("Classes", "Class")" class="btn btn-primary">
+                        <i class="far fa-calendar-alt"></i> Manage Classes
+                    </a>
+                    <a href="@Url.Action("ClassTypes", "ClassType")" class="btn btn-primary">
+                        <i class="fas fa-tags"></i> Manage Class Types
+                    </a>
+                    <a href="@Url.Action("Reservations", "Reservation")" class="btn btn-primary">
+                        <i class="far fa-calendar-check"></i> Manage Reservations
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

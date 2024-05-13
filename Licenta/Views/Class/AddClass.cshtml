@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "AddClass";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Class</title>
+    <style>
+        input {
+            width: 190px;
+            font-size: 16px;
+            height: 28px;
+            padding: 2px;
+            margin: 3px;
+            border: solid;
+            border-color: indigo;
+            border-radius: 4px;
+            border-width: 2px;
+            margin-left: 72px;
+        }
+
+        form {
+            padding: 2px;
+        }
+
+        button {
+            width: 160px;
+            height: 45px;
+            color: white;
+            background-color: forestgreen;
+            border-radius: 6px;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form action="/Class/SaveAddedClass" method="POST">
+            Class Name : <input type="text" id="name" name="name" /> <br />
+            Description : <input type="text" id="description" name="description" /> <br />
+            Date : <input type="date" id="date" name="date" /> <br />
+            Time : <input type="time" id="time" name="time" /> <br />
+            Class Type :
+            <select id="idct" name="idct">
+                @foreach (var classType in ViewBag.ClassType)
+                {
+                    <option value="@classType.idct">@classType.type</option>
+                }
+            </select>
+            <br />
+            Coach :
+            <select id="idco" name="idco">
+                @foreach (var coach in ViewBag.Coach)
+                {
+                    <option value="@coach.idco">@coach.name</option>
+                }
+            </select>
+            <br />
+
+            <div>
+                <button type="submit">Add Class</button>
+                <button type="button" onclick="window.location.href='/Class/Classes'">Cancel</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

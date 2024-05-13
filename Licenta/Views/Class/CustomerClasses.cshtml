@@ -1,0 +1,104 @@
+﻿@model List<Licenta.Models.Classes>
+
+@{
+    ViewBag.Title = "CustomerClasses";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+<style>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .gym-classes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .class-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        padding: 20px;
+        width: calc(50% - 20px);
+        margin-bottom: 20px;
+    }
+
+        .class-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .class-card p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        .class-card span {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+    .menu-items {
+        width: auto;
+        height: auto;
+        text-align: center;
+        margin: 20px auto;
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        font-size: 1.1rem;
+        cursor: pointer;
+        border-radius: 13px;
+        padding: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease;
+    }
+
+        .menu-items:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+<div class="container">
+    <h2 style="text-align: center; font-size: 32px; padding-top: 30px;">Gym Classes</h2>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="gym-classes">
+            @foreach (var classObj in Model)
+            {
+                <div class="class-card">
+                    <h3>@classObj.name</h3>
+                    <p><strong>Coach:</strong> @classObj.CoachName</p>
+                    <p><strong>Description:</strong> @classObj.description</p>
+                    <p><strong>Date:</strong> @classObj.date.ToShortDateString()</p>
+                    <p><strong>Time:</strong> @classObj.time.ToString()</p>
+                    <!-- Add other class details as needed -->
+                    <button class="menu-items" onclick="Enroll(@classObj.idcl)">Enroll</button>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p style="text-align: center; font-size: 20px; color: #555; line-height: 1.5;">Hey there! Looks like this gym currently does not have any classes in the future. Look again in a bit to maybe find some new ones!</p>
+    }
+</div>
+
+<script>
+    function handleButtonClick(url) {
+        window.location.href = url;
+    }
+
+    function Enroll(idcl) {
+            window.location.href = "/Class/Enroll?classId=" + idcl;
+    }
+</script>

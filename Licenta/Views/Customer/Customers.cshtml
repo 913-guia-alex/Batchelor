@@ -1,0 +1,392 @@
+﻿@model List<Licenta.Models.Customer>
+
+@{
+    ViewBag.Title = "Customers";
+}
+
+<!-- Add these scripts before the closing </body> tag -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+
+<style>
+    /* Add this style block in the head section of your HTML */
+    .btn-transition {
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-transition:hover {
+            background-color: forestgreen;
+            color: white;
+        }
+
+    /* Adjusted style for search bar alignment */
+    .search-container {
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: flex-end; /* Align to the right */
+    }
+
+        .search-container input {
+            width: 200px; /* Adjust as needed */
+            margin-left: 10px;
+        }
+
+
+
+
+
+
+
+
+    .dropdown {
+        height: fit-content;
+        width: 100px;
+        position: absolute;
+        display: flex;
+        top: 115px; /* Adjusted top position */
+        left: 215px; /* Adjusted left position */
+        z-index: 1000; /* Ensure the dropdown is above other elements */
+    }
+
+    .dropdown-toggle {
+        color: #333;
+        padding: .75rem 2.5rem;
+        border: none;
+        border-radius: .5rem;
+        cursor: pointer;
+        width: 150px;
+        display: flex;
+        align-items: center; /* Center items vertically */
+        justify-content: space-between; /* Add space between text and icon */
+    }
+
+        .dropdown-toggle span {
+            display: flex;
+            align-items: center; /* Center items vertically */
+        }
+
+        .dropdown-toggle i {
+            margin: 0.3rem; /* Adjust spacing between text and icon */
+        }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%; /* Adjusted position to be under the dropdown button */
+        left: 0; /* Adjusted position to be aligned with the left side */
+        border: 1px solid #ccc;
+        border-radius: 1rem;
+        padding: 0;
+        list-style: none;
+        display: none;
+    }
+
+        .dropdown-menu .menu-item:first-child {
+            border-radius: 1rem 1rem 0 0;
+        }
+
+        .dropdown-menu .menu-item:last-child {
+            border-radius: 0 0 1rem 1rem;
+        }
+
+    .menu-items {
+        width: 170px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.5rem; /* Adjusted padding */
+        border: none;
+        font-size: 1.1rem;
+        cursor: pointer;
+        border-radius: 13px !important; /* Remove button border-radius for a rectangular shape */
+    }
+
+
+
+
+
+
+
+
+    /* Modal styles */
+    .modal-container {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .button {
+        padding: 10px 20px;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+        /* Add hover animations to the buttons */
+        .button:hover {
+            transform: scale(1.05); /* Scale the button slightly on hover */
+            transition: transform 0.3s ease;
+        }
+
+
+    .cancel-button {
+        background-color: #ccc;
+        color: #535353;
+    }
+
+        .cancel-button:hover {
+            background-color: #bbb; /* Darken the background color on hover */
+        }
+
+    .delete-button {
+        background-color: #e74c3c;
+        color: #fff;
+    }
+
+        .delete-button:hover {
+            background-color: #c0392b; /* Darken the background color on hover */
+        }
+</style>
+
+
+<h2 style="text-align: center;">Admin Panel - Customers</h2>
+
+
+<!-- Filter Dropdown -->
+<div class="dropdown">
+    <div class="dropdown-toggle" onclick="toggleDropdown()">
+        <span>
+            <i class="fas fa-sort"></i> <!-- Sort icon -->
+            Sort
+        </span>
+    </div>
+    <ul class="dropdown-menu" id="dropdownMenu">
+        <li class="menu-items" onclick="handleButtonClick('sortBySurname')">
+            <i class="fas fa-sort-alpha-down"></i>
+            Surname
+        </li>
+        <li class="menu-items" onclick="handleButtonClick('sortByLastname')">
+            <i class="fas fa-sort-alpha-down"></i>
+            Lastname
+        </li>
+        <li class="menu-items" onclick="handleButtonClick('sortByAge')">
+            <i class="fas fa-sort-numeric-up"></i>
+            Age
+        </li>
+    </ul>
+</div>
+
+
+<!-- Search Bar -->
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search..." class="form-control">
+</div>
+
+<!-- Gym List Table -->
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Surname</th>
+        <th>Lastname</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Action</th>
+    </tr>
+    @foreach (var customer in Model)
+    {
+        <tr>
+            <td>@customer.idc</td>
+            <td>@customer.surname</td>
+            <td>@customer.lastname</td>
+            <td>@customer.age</td>
+            <td>@customer.gender</td>
+            <td>@customer.email</td>
+            <td>@customer.password</td>
+            <td>
+                <button class="btn btn-danger" onclick="showDeleteConfirmation(@customer.idc)">Delete</button>
+                <a href="/Customer/UpdateCustomerView?id=@customer.idc" class="btn btn-primary">Update</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="row">
+    <div class="col-md-6">
+        <a href="/Customer/AddCustomer" class="btn btn-secondary btn-transition">Add a new customer</a>
+    </div>
+    <div class="col-md-6 text-md-right">
+        <a href="/Admin/Admins" class="btn btn-secondary btn-transition">Go Back</a>
+    </div>
+</div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="modal-container">
+    <div class="modal-content">
+        <h2>Delete Confirmation</h2>
+        <p class="confirmation-message">
+            Are you sure you want to delete this item?
+        </p>
+        <div class="button-container">
+            <button id="cancelDeleteBtn" class="button cancel-button">
+                Cancel
+            </button>
+            <button id="confirmDeleteBtn" class="button delete-button">
+                Delete
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    // Function to filter customers based on search input
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("table tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+    function deleteCustomer(customerId) {
+        $.ajax({
+            type: "POST",
+            url: "/Customer/DeleteCustomer",
+            data: { id: customerId },
+            success: function () {
+                // Refresh the customer list (replace with your actual refresh logic)
+                location.reload();
+            }
+        });
+    }
+
+    function showDeleteConfirmation(customerId) {
+        const modal = document.getElementById('deleteModal');
+        modal.style.display = 'flex';
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        confirmDeleteBtn.onclick = function () {
+            deleteCustomer(customerId);
+            hideModal('deleteModal');
+        }
+        const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+        cancelDeleteBtn.onclick = function () {
+            hideModal('deleteModal');
+        }
+    }
+
+    function hideModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.style.display = 'none';
+    }
+
+    function toggleDropdown() {
+        var dropdownMenu = document.getElementById("dropdownMenu");
+        dropdownMenu.style.display = (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") ? "block" : "none";
+    }
+
+
+    function handleButtonClick(sortType) {
+        toggleDropdown();
+        if (sortType === "sortBySurname") {
+            sortBySurname();
+        } else if (sortType === "sortByLastname") {
+            sortByLastname();
+        } else if (sortType === "sortByAge") {
+            sortByAge();
+        }
+    }
+
+
+
+    // Function to sort by surname
+    function sortBySurname() {
+        var rows = $("table tbody tr").get();
+
+        rows.sort(function (rowA, rowB) {
+            var surnameA = $(rowA).find("td:eq(1)").text().toUpperCase(); // Extract surname value from cell and convert to uppercase for case-insensitive comparison
+            var surnameB = $(rowB).find("td:eq(1)").text().toUpperCase(); // Extract surname value from cell and convert to uppercase for case-insensitive comparison
+
+            return surnameA.localeCompare(surnameB); // Sort alphabetically
+        });
+
+        $.each(rows, function (index, row) {
+            $("table tbody").append(row);
+        });
+    }
+
+    // Function to sort by lastname
+    function sortByLastname() {
+        var rows = $("table tbody tr").get();
+
+        rows.sort(function (rowA, rowB) {
+            var lastnameA = $(rowA).find("td:eq(2)").text().toUpperCase(); // Extract lastname value from cell and convert to uppercase for case-insensitive comparison
+            var lastnameB = $(rowB).find("td:eq(2)").text().toUpperCase(); // Extract lastname value from cell and convert to uppercase for case-insensitive comparison
+
+            return lastnameA.localeCompare(lastnameB); // Sort alphabetically
+        });
+
+        $.each(rows, function (index, row) {
+            $("table tbody").append(row);
+        });
+    }
+
+    // Function to sort by age
+    function sortByAge() {
+        var rows = $("table tbody tr").get();
+
+        rows.sort(function (rowA, rowB) {
+            var ageA = parseInt($(rowA).find("td:eq(3)").text()); // Extract age value from cell and convert to integer
+            var ageB = parseInt($(rowB).find("td:eq(3)").text()); // Extract age value from cell and convert to integer
+
+            return ageA - ageB; // Sort numerically
+        });
+
+        $.each(rows, function (index, row) {
+            $("table tbody").append(row);
+        });
+    }
+
+
+    $(document).on("click", function (event) {
+        if (!$(event.target).closest(".dropdown").length && $("#dropdownMenu").css("display") === "block") {
+            toggleDropdown(); // Retract dropdown menu if it's shown
+        }
+    });
+
+
+
+
+</script>

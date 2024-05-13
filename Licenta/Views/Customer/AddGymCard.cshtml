@@ -1,0 +1,97 @@
+﻿@model Licenta.Models.GymCard
+
+@{
+    ViewBag.Title = "Add Gym Card";
+}
+
+
+<style>
+
+    /* Custom CSS for Add Gym Card view */
+
+    /* Center the card vertically */
+    .card {
+        margin-top: 50px;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Style the card title */
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    /* Style the card text */
+    .card-text {
+        font-size: 1rem;
+        color: #6c757d;
+    }
+
+    /* Style the list group */
+    .list-group-item {
+        background-color: #f8f9fa;
+        border: none;
+        font-size: 0.9rem;
+    }
+
+    /* Style the confirm and cancel buttons */
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    /* Style the button text */
+    .btn {
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+        /* Vibrant hover effect on buttons */
+        .btn:hover {
+            filter: brightness(120%);
+        }
+
+    /* Center the buttons */
+    .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+</style>
+
+
+<h2 class="text-center">Add Gym Card</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Confirm Gym Membership</h5>
+        <p class="card-text">Please review the details below and confirm to create a gym membership.</p>
+        <ul class="list-group mb-3">
+            <li class="list-group-item"><strong>Customer Email:</strong> @ViewBag.CustomerEmail</li>
+            <li class="list-group-item"><strong>Gym Name:</strong> @ViewBag.GymName</li>
+            <li class="list-group-item"><strong>Price:</strong> $@Model.price</li>
+            <li class="list-group-item"><strong>Made Date:</strong> @Model.madeDate.ToShortDateString()</li>
+            <li class="list-group-item"><strong>Expiration Date:</strong> @Model.expirationDate.ToShortDateString()</li>
+        </ul>
+
+        <div class="button-container">
+            <form method="post" action="@Url.Action("SaveAddedGymCard", "Customer")">
+                @Html.HiddenFor(model => model.idc)
+                @Html.HiddenFor(model => model.idg)
+                @Html.HiddenFor(model => model.price)
+                @Html.HiddenFor(model => model.madeDate)
+                @Html.HiddenFor(model => model.expirationDate)
+                <button type="submit" class="btn btn-success mr-3">Confirm</button>
+                <a href="@Url.Action("AllGymCustomer", "Gym", new { id = Model.idc })" class="btn btn-danger">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

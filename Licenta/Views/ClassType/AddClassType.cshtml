@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "AddClassType";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Class Type</title>
+    <style>
+        input {
+            width: 190px;
+            font-size: 16px;
+            height: 28px;
+            padding: 2px;
+            margin: 3px;
+            border: solid;
+            border-color: indigo;
+            border-radius: 4px;
+            border-width: 2px;
+            margin-left: 72px;
+        }
+
+        form {
+            padding: 2px;
+        }
+
+        button {
+            width: 160px;
+            height: 45px;
+            color: white;
+            background-color: forestgreen;
+            border-radius: 6px;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form action="/ClassType/SaveAddedClassType" method="GET">
+            Type : <input type="text" id="IDtype" name="type" /> <br />
+            Difficulty : <input type="text" id="IDdifficulty" name="difficulty" pattern="[0-9]+" title="Enter a valid integer value" /> <br />
+
+            <div>
+                <button type="submit">Add Class Type</button>
+                <button type="reset" onclick="window.location.href='ClassTypes'">Cancel</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

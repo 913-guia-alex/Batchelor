@@ -1,0 +1,89 @@
+﻿
+@model Licenta.Models.Reservation
+@{
+    ViewBag.Title = "Update Rreservation";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>Update Reservation</title>
+    <style>
+        input {
+            width: 190px;
+            font-size: 16px;
+            height: 28px;
+            padding: 2px;
+            margin: 3px;
+            border: solid;
+            border-color: indigo;
+            border-radius: 4px;
+            border-width: 2px;
+            margin-left: 72px;
+        }
+
+        form {
+            padding: 2px;
+        }
+
+        button {
+            width: 140px;
+            height: 38px;
+            color: white;
+            background-color: forestgreen;
+            border-radius: 6px;
+            margin: 5px;
+        }
+
+        .buttons {
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Update Reservation</h3>
+
+    <form id="updateForm" action="@Url.Action("UpdateReservation", "Reservation")" method="post">
+        <input type="hidden" name="idr" value="@Model.idr" />
+        <div>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" value="@Model.Date.ToString("yyyy-MM-dd")" />
+        </div>
+
+        <div>
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" value="@Model.Time" />
+        </div>
+        <div>
+            <label for="idcl">Class Name:</label>
+            <select id="idcl" name="idcl">
+                @foreach (var className in ViewBag.ClassName)
+                {
+                    <option value="@className.idcl">@className.name</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label for="idc">Customer Email:</label>
+            <select id="idc" name="idc">
+                @foreach (var customer in ViewBag.CustomerEmail)
+                {
+                    <option value="@customer.idc">@customer.email</option>
+                }
+            </select>
+        </div>
+        <div class="buttons">
+            <button type="submit">Update</button>
+            <button type="button" onclick="cancelUpdate()">Cancel</button>
+        </div>
+    </form>
+
+    <script>
+        function cancelUpdate() {
+            window.location.href = '/Reservation/Reservations';
+        }
+    </script>
+
+</body>
+</html>

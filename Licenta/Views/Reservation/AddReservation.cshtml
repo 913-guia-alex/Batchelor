@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "AddReservation";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Reservation</title>
+    <style>
+        input {
+            width: 190px;
+            font-size: 16px;
+            height: 28px;
+            padding: 2px;
+            margin: 3px;
+            border: solid;
+            border-color: indigo;
+            border-radius: 4px;
+            border-width: 2px;
+            margin-left: 72px;
+        }
+
+        form {
+            padding: 2px;
+        }
+
+        button {
+            width: 160px;
+            height: 45px;
+            color: white;
+            background-color: forestgreen;
+            border-radius: 6px;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form action="/Reservation/SaveAddedReservation" method="POST">
+            Date : <input type="date" id="date" name="date" /> <br />
+            Time : <input type="time" id="time" name="time" /> <br />
+            Class Name :
+            <select id="idcl" name="idcl">
+                @foreach (var className in ViewBag.ClassName)
+                {
+                    <option value="@className.idcl">@className.name</option>
+                }
+            </select>
+            <br />
+            Customer Email:
+            <select id="idc" name="idc">
+                @foreach (var customer in ViewBag.CustomerEmail)
+                {
+                    <option value="@customer.idc">@customer.email</option>
+                }
+            </select>
+            <br />
+
+            <div>
+                <button type="submit">Add Class</button>
+                <button type="button" onclick="window.location.href='/Reservation/Reservations'">Cancel</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+

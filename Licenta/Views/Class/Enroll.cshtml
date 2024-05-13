@@ -1,0 +1,96 @@
+﻿@model Licenta.Models.Reservation
+
+@{
+    ViewBag.Title = "Add Reservation";
+}
+
+<style>
+    /* Custom CSS for Add Reservation view */
+
+    /* Center the card vertically */
+    .card {
+        margin-top: 50px;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Style the card title */
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    /* Style the card text */
+    .card-text {
+        font-size: 1rem;
+        color: #6c757d;
+    }
+
+    /* Style the list group */
+    .list-group-item {
+        background-color: #f8f9fa;
+        border: none;
+        font-size: 0.9rem;
+    }
+
+    /* Style the confirm and cancel buttons */
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    /* Style the button text */
+    .btn {
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+        /* Vibrant hover effect on buttons */
+        .btn:hover {
+            filter: brightness(120%);
+        }
+
+    /* Center the buttons */
+    .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+</style>
+
+<h2 class="text-center">Add Reservation</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Confirm Reservation</h5>
+        <p class="card-text">Please review the details below and confirm to create a reservation.</p>
+        <ul class="list-group mb-3">
+            <li class="list-group-item"><strong>Class Name:</strong> @Model.ClassName</li>
+            <li class="list-group-item"><strong>Date:</strong> @Model.Date.ToShortDateString()</li>
+            <li class="list-group-item"><strong>Time:</strong> @Model.Time.ToString()</li>
+        </ul>
+
+        <form method="post" action="@Url.Action("SaveReservation", "Class")">
+            @Html.HiddenFor(model => model.idcl)
+            @Html.HiddenFor(model => model.Date)
+            @Html.HiddenFor(model => model.Time)
+
+            <div class="form-group">
+                <label for="customerEmail">Customer Email:</label>
+                <input type="email" class="form-control" id="customerEmail" name="customerEmail" required>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="btn btn-success mr-3">Confirm</button>
+                <a href="@Url.Action("CustomerClasses", "Class", new { id = Model.idc })" class="btn btn-danger">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

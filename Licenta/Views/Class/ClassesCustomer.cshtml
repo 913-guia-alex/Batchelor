@@ -1,0 +1,88 @@
+﻿@model List<Licenta.Models.Reservation>
+
+@{
+    ViewBag.Title = "ClassesCustomer";
+}
+
+<style>
+    /* Custom CSS for ClassesCustomer view */
+
+    /* Center the content */
+    .container {
+        max-width: 800px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+
+    td {
+        background-color: #ffffff;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .no-reservations {
+        text-align: center;
+        font-style: italic;
+        color: #777;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container">
+    <h2>Client Reservations</h2>
+
+    @if (Model.Count == 0)
+    {
+        <p class="no-reservations">Hey there! Looks like you don''t have any reservations made for now. No worries, let's fix that!</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Reservation ID</th>
+                    <th>Customer Email</th>
+                    <th>Class Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reservation in Model)
+                {
+                    <tr>
+                        <td>@reservation.idr</td>
+                        <td>@reservation.CustomerEmail</td>
+                        <td>@reservation.ClassName</td>
+                        <td>@reservation.Date.ToShortDateString()</td>
+                        <td>@reservation.Time</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

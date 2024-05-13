@@ -1,0 +1,97 @@
+﻿@model Licenta.Models.Classes
+@{
+    ViewBag.Title = "Update Class";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>Update Class</title>
+    <style>
+        input {
+            width: 190px;
+            font-size: 16px;
+            height: 28px;
+            padding: 2px;
+            margin: 3px;
+            border: solid;
+            border-color: indigo;
+            border-radius: 4px;
+            border-width: 2px;
+            margin-left: 72px;
+        }
+
+        form {
+            padding: 2px;
+        }
+
+        button {
+            width: 140px;
+            height: 38px;
+            color: white;
+            background-color: forestgreen;
+            border-radius: 6px;
+            margin: 5px;
+        }
+
+        .buttons {
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Update Class</h3>
+
+    <form id="updateForm" action="@Url.Action("UpdateClass", "Class")" method="post">
+        <input type="hidden" name="idcl" value="@Model.idcl" />
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="@Model.name" />
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" value="@Model.description" />
+        </div>
+        <div>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" value="@Model.date.ToString("yyyy-MM-dd")" />
+        </div>
+
+        <div>
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" value="@Model.time" />
+        </div>
+        <div>
+            <label for="idct">Class Type:</label>
+            <select id="idct" name="idct">
+                @foreach (var classType in ViewBag.ClassType)
+                {
+                    <option value="@classType.idct">@classType.type</option>
+
+                }
+            </select>
+        </div>
+        <div>
+            <label for="idco">Coach:</label>
+            <select id="idco" name="idco">
+                @foreach (var coach in ViewBag.Coach)
+                {
+                    <option value="@coach.idco">@coach.name</option>
+                }
+            </select>
+        </div>
+        <div class="buttons">
+            <button type="submit">Update</button>
+            <button type="button" onclick="cancelUpdate()">Cancel</button>
+        </div>
+    </form>
+
+    <script>
+        function cancelUpdate() {
+            window.location.href = '/Class/Classes';
+        }
+    </script>
+
+</body>
+</html>

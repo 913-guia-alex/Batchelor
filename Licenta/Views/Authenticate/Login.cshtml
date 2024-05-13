@@ -1,0 +1,128 @@
+﻿@model Licenta.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>User Login</title>
+    <style>
+        /* Center the page horizontally and add a black border */
+        .login-container {
+            max-width: 700px;
+            margin: 0 auto;
+            border: 1px solid #000; /* Black border */
+            padding: 20px; /* Add padding for spacing inside the border */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        /* Center the buttons horizontally and vertically */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1; /* Allow the btn-group to grow vertically */
+        }
+
+        .btn {
+            margin: 10px 10px 10px 10px; /* Add margin between buttons */
+        }
+
+        h3 {
+            margin-bottom: 25px;
+        }
+    </style>
+
+    <style>
+        /* Add this style block in the head section of your HTML */
+        .btn-primary {
+            background-color: #007BFF; /* Dark blue */
+            border-color: #007BFF;
+            border-radius: 13px !important; /* Remove button border-radius for a rectangular shape */
+            width: 13%;
+            display: inline-block; /* Ensure display is set to inline-block or block to apply border-radius to all corners */
+        }
+
+            .btn-primary:hover {
+                background-color: #0056b3; /* Slightly lighter blue on hover */
+                border-color: #0056b3;
+            }
+    </style>
+
+    <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("Password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="login-container">
+        <h3>Please Login or Register to continue:</h3>
+
+        @using (Html.BeginForm("Login", "Authenticate", FormMethod.Post, new { onsubmit = "return validateForm();" }))
+        {
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", id = "Password" })
+                <input type="checkbox" onclick="togglePasswordVisibility()"> Show Password
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary" style="align-self: flex-start;">Sign in</button>
+                <a href="/Register/RegisterCustomer">Register as client</a>
+                <p><a href="/Register/RegisterGym">Register as gym</a></p>
+                <p><a href="/Password/ResetPassword">Forgot your password?</a></p>
+            </div>
+        }
+    </div>
+
+    @if (TempData["Role"] != null)
+    {
+        var role = TempData["Role"].ToString();
+        if (role == "admin")
+        {
+            <script>
+                window.location.href = '@Url.Action("Admins", "Admin")';
+            </script>
+        }
+        else if (role == "customer")
+        {
+            var customerId = TempData["CustomerId"]; // Assuming you set this TempData in the controller
+            <script>
+                    // Redirect to the customer's view and pass the customer ID
+                    window.location.href = '@Url.Action("Main", "Customer")' + '?customerId=' + @customerId;
+            </script>
+        }
+        else if (role == "gym")
+        {
+            var gymId = TempData["GymId"]; // Assuming you set this TempData in the controller
+            <script>
+                window.location.href = '@Url.Action("GymCoaches", "Gym")' + '?gymId=' + @gymId;
+
+            </script>
+
+        }
+    }
+
+</body>
+</html>

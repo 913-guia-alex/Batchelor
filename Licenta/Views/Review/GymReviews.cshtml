@@ -1,0 +1,55 @@
+﻿@model List<Licenta.Models.Review>
+
+@{
+    ViewBag.Title = "Gym Reviews";
+}
+
+<style>
+    /* Add your CSS styles here */
+    .review-container {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+        .review-container h3 {
+            margin-top: 0;
+        }
+
+        .review-container p {
+            margin-bottom: 5px;
+        }
+</style>
+
+<div class="container">
+    <div class="text-center">
+        <h2>@ViewBag.GymName Reviews</h2>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="review-list">
+            @foreach (var review in Model)
+            {
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="review-container">
+                            <h3>@review.rating</h3>
+                            <p>Description: @review.description</p>
+                            <p>From: @review.customerEmail</p>
+                            <!-- Add other review details as needed -->
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>No reviews available for this gym.</p>
+    }
+</div>
+
+
