@@ -11,7 +11,7 @@ namespace Licenta.Controllers
     public class CustomerController : Controller
     {
 
-        private DAL dal = new DAL(); // Create an instance of your DAL
+        private DAL dal = new DAL(); 
 
         public ActionResult Index()
         {
@@ -21,19 +21,15 @@ namespace Licenta.Controllers
 
         public ActionResult Main(int id)
         {
-            // Retrieve customer details from the database based on the provided ID
             Customer customer = dal.GetCustomer(id);
 
             if (customer == null)
             {
-                // Handle the case where the customer is not found
                 return HttpNotFound();
             }
 
-            // Retrieve gym cards associated with the customer
             List<GymCard> gymCards = dal.GetGymCardsByCustomerId(id);
 
-            // Pass both customer and gym cards to the view
             ViewBag.Customer = customer;
             ViewBag.GymCards = gymCards;
 
@@ -42,30 +38,23 @@ namespace Licenta.Controllers
 
         public ActionResult AddGymCard(int customerId, int gymId)
         {
-            // Fetch the gym and customer entities from the database
             Gym gym = dal.GetGym(gymId);
             Customer customer = dal.GetCustomer(customerId);
 
             if (gym == null || customer == null)
             {
-                // Handle case where gym or customer is not found
                 return HttpNotFound();
             }
 
-            // Calculate the gym card price based on the gym
             int gymCardPrice = CalculateGymCardPrice(gym);
 
-            // Set the current date as the made date
             DateTime madeDate = DateTime.Now;
 
-            // Set the expiration date as current date + 1 month
             DateTime expirationDate = madeDate.AddMonths(1);
 
-            // Set ViewBag properties for customer email and gym name
             ViewBag.CustomerEmail = customer.email;
             ViewBag.GymName = gym.name;
 
-            // Create a new GymCard object
             GymCard gymCard = new GymCard
             {
                 idc = customerId,
@@ -75,7 +64,6 @@ namespace Licenta.Controllers
                 expirationDate = expirationDate
             };
 
-            // Pass the gym card model to the view
             return View(gymCard);
         }
 
@@ -83,16 +71,13 @@ namespace Licenta.Controllers
         [HttpPost]
         public ActionResult SaveAddedGymCard(GymCard gymCard)
         {
-            // Add the gym card to the database
             dal.AddGymCardToDatabase(gymCard);
 
-            // Redirect the user to Gym/AllGymCustomer/{CustomerId}
             return RedirectToAction("AllGymCustomer", "Gym", new { id = gymCard.idc });
         }
 
         private int CalculateGymCardPrice(Gym gym)
         {
-            // Example: Price calculation based on gym name
             switch (gym.name)
             {
                 case "REVOgym":
@@ -100,7 +85,7 @@ namespace Licenta.Controllers
                 case "Gym XYZ":
                     return 150;
                 default:
-                    return 100; // Default price for other gyms
+                    return 100; 
             }
         }
 
@@ -144,15 +129,12 @@ namespace Licenta.Controllers
          [HttpPost]
         public ActionResult AddToFavourite(int customerId, int gymId)
         {
-            // Check if the gym is already in the customer's favorite list
             if (dal.IsGymInFavorites(customerId, gymId))
             {
-                // Gym is already in favorites, return a message or handle as needed
                 return Json(new { success = false, message = "Gym is already in favorites." });
             }
             else
             {
-                // Add the gym to the customer's favorite list
                 dal.AddToFavourite(customerId, gymId);
                 return Json(new { success = true });
             }

@@ -12,7 +12,7 @@ namespace Licenta.Controllers
 {
     public class CoachController : Controller
     {
-        private DAL dal = new DAL(); // Create an instance of your DAL
+        private DAL dal = new DAL(); 
 
         public ActionResult Index()
         {
@@ -68,35 +68,27 @@ namespace Licenta.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    // Check if a new photo is uploaded
                     if (photo != null && photo.ContentLength > 0)
                     {
-                        // Convert the photo file to a byte array
                         byte[] photoData = new byte[photo.ContentLength];
                         photo.InputStream.Read(photoData, 0, photo.ContentLength);
 
-                        // Log the length of the byte array
                         Debug.WriteLine("Received photo data. Length: " + photoData.Length);
 
-                        // Assign the photo byte array to the coach's photo property
                         coach.photo = photoData;
                     }
 
-                    // Call the DAL method to update the coach in the database
                     dal.UpdateCoach(coach);
 
-                    // Redirect to the Coaches view
                     return RedirectToAction("Coaches");
                 }
                 else
                 {
-                    // Model validation failed, return to the UpdateCoach view with errors
                     return View("UpdateCoach", coach);
                 }
             }
             catch (Exception ex)
             {
-                // Handle the exception
                 ViewBag.Error = "Error occurred while updating the coach: " + ex.Message;
                 return View("UpdateCoach", coach);
             }
@@ -120,29 +112,22 @@ namespace Licenta.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    // Check if a new photo is uploaded
                     if (photo != null && photo.ContentLength > 0)
                     {
-                        // Convert the photo file to a byte array
                         byte[] photoData = new byte[photo.ContentLength];
                         photo.InputStream.Read(photoData, 0, photo.ContentLength);
 
-                        // Log the length of the byte array
                         Debug.WriteLine("Received photo data. Length: " + photoData.Length);
 
-                        // Assign the photo byte array to the coach's photo property
                         coach.photo = photoData;
                     }
 
-                    // Call the DAL method to update the coach in the database
                     dal.UpdateCoach(coach);
 
-                    // Redirect to the Coaches view
                     return RedirectToAction("Coaches");
                 }
                 else
                 {
-                    // Model validation failed, return to the UpdateCoach view with errors
                     return View("UpdateCoachGym", coach);
                 }
             }
@@ -164,29 +149,23 @@ namespace Licenta.Controllers
                 {
                     if (photo != null && photo.ContentLength > 0)
                     {
-                        // Convert the photo file to a byte array
                         byte[] photoData = new byte[photo.ContentLength];
                         photo.InputStream.Read(photoData, 0, photo.ContentLength);
 
-                        // Assign the photo byte array to the coach's photo property
                         coach.photo = photoData;
                     }
 
-                    // Call the DAL method to add the coach to the database
                     dal.AddNewCoach(coach);
 
-                    // Redirect to the Coaches view
                     return RedirectToAction("Coaches");
                 }
                 else
                 {
-                    // Model validation failed, return to the AddCoach view with errors
                     return View("AddCoach", coach);
                 }
             }
             catch (Exception ex)
             {
-                // Handle the exception
                 ViewBag.Error = "Error occurred while adding the coach: " + ex.Message;
                 return View("AddCoach", coach);
             }

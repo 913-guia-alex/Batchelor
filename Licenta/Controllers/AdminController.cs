@@ -16,7 +16,6 @@ namespace Licenta.Controllers
         }
         public ActionResult Admins()
         {
-            // Handle the admin panel action
             return View("Admins");
         }
 

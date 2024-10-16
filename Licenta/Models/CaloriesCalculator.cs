@@ -8,10 +8,10 @@ namespace Licenta.Models
     public class CaloriesCalculator
     {
         public int Age { get; set; }
-        public string Gender { get; set; } // You can use enum for gender (e.g., Male, Female)
-        public double Height { get; set; } // Height in centimeters
-        public double Weight { get; set; } // Weight in kilograms
-        public string Goal { get; set; } // Variants: "Lose Weight", "Maintain Weight", "Gain Weight"
+        public string Gender { get; set; } 
+        public double Height { get; set; } 
+        public double Weight { get; set; } 
+        public string Goal { get; set; } 
         public double Calories { get; set; }
     }
 }

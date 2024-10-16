@@ -16,7 +16,7 @@
         }
 
         .gym-card {
-            position: relative; /* Make position relative for absolute positioning of star */
+            position: relative; 
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -47,16 +47,14 @@
             top: 10px;
             right: 10px;
             cursor: pointer;
-            color: #ffd700; /* Golden star color */
+            color: #ffd700; 
             font-size: 24px;
         }
-            /* Add hover animations to the buttons */
             .star:hover {
-                transform: scale(1.20); /* Scale the button slightly on hover */
+                transform: scale(1.20); 
                 transition: transform 0.3s ease;
             } 
 
-        /* Button styles */
         .menu-items {
             display: inline-block;
             text-align: center;
@@ -75,7 +73,6 @@
         }
 
 
-        /* Modal styles */
         .modal-container {
             display: none;
             position: fixed;
@@ -112,9 +109,8 @@
             border-radius: 5px;
             cursor: pointer;
         }
-            /* Add hover animations to the buttons */
             .button:hover {
-                transform: scale(1.05); /* Scale the button slightly on hover */
+                transform: scale(1.05);
                 transition: transform 0.3s ease;
             }
 
@@ -124,7 +120,7 @@
             color: #535353;
         }
             .cancel-button:hover {
-                background-color: #bbb; /* Darken the background color on hover */
+                background-color: #bbb; 
             }
 
         .delete-button {
@@ -132,7 +128,7 @@
             color: #fff;
         }
             .delete-button:hover {
-                background-color: #c0392b; /* Darken the background color on hover */
+                background-color: #c0392b;
             }
 
     </style>
@@ -140,6 +136,11 @@
 <body>
     <div class="container body-content">
         <h2 style="text-align: center;">Favorites</h2>
+
+        <div class="redirect-container" style="text-align: center; margin-bottom: 20px;">
+            <i class="fas fa-arrow-left" id="redirectArrow" style="cursor: pointer; font-size: 24px;"></i>
+            <span id="goBackText" style="cursor: pointer; font-size: 24px; margin-left: 10px;">Go Back</span>
+        </div>
 
         @if (ViewBag.Favourites != null && ViewBag.Favourites.Count > 0)
         {
@@ -164,7 +165,6 @@
 
 
 
-    <!-- Delete Confirmation Modal -->
     <div id="modal" class="modal-container">
         <div class="modal-content">
             <h2>Delete Confirmation</h2>
@@ -197,6 +197,29 @@
             }
         }
 
+        function getCustomerId() {
+            var url = window.location.href;
+            var customerIdIndex = url.lastIndexOf("/") + 1;
+            var customerId = url.substr(customerIdIndex);
+
+            if (!isNaN(customerId) && parseInt(customerId) > 0) {
+                return parseInt(customerId);
+            } else {
+                alert("Please log in to access this feature.");
+                window.location.href = "/Account/Login";
+            }
+        }
+
+        // Add event listener to the arrow icon
+        $(document).ready(function () {
+            $("#redirectArrow").click(function () {
+                var customerId = getCustomerId();
+                window.location.href = "/Customer/Main/" + customerId;
+            });
+
+            console.log("jQuery loaded successfully!"); // Check if jQuery is loaded
+        });
+
         function removeGymFromFavorites(favouriteId) {
             $.ajax({
                 type: "POST",
@@ -204,7 +227,6 @@
                 data: { favouriteId: favouriteId },
                 success: function (response) {
                     console.log("Gym removed from favorites successfully.");
-                    // Reload the page to reflect the changes
                     location.reload();
                 },
                 error: function (xhr, status, error) {

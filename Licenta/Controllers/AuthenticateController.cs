@@ -12,7 +12,6 @@ namespace Licenta.Controllers
     {
         private DAL dal = new DAL();
 
-        // GET: Authenticate
         public ActionResult Login()
         {
             return View();
@@ -30,7 +29,6 @@ namespace Licenta.Controllers
 
             if (role == "admin")
             {
-                // Redirect to the Admins.cshtml view in the Admin folder
                 return RedirectToAction("Admins", "Admin");
             }
             else if (role == "customer")
@@ -38,7 +36,6 @@ namespace Licenta.Controllers
                 int customerId = dal.GetCustomerIdByEmail(model.Email);
                 TempData["CustomerId"] = customerId;
 
-                // Redirect to the Main.cshtml view in the Customer folder
                 return RedirectToAction("Main", "Customer", new { id = customerId });
             }
             else if (role == "gym")
@@ -46,7 +43,6 @@ namespace Licenta.Controllers
                 int gymId = dal.GetGymIdByName(model.Email);
                 TempData["GymId"] = gymId;
 
-                // Redirect to the Main.cshtml view in the Customer folder
                 return RedirectToAction("GymCoaches", "Gym", new { id = gymId });
             }
             else

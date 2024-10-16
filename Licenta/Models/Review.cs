@@ -8,8 +8,8 @@ namespace Licenta.Models
     public class Review
     {
         public int idrev { get; set; }
-        public int idc { get; set; } // Customer ID (foreign key)
-        public int idg { get; set; } // Gym ID (foreign key)
+        public int idc { get; set; } 
+        public int idg { get; set; } 
         public string description { get; set; }
         public float rating { get; set; }
         public string customerEmail { get; set; }

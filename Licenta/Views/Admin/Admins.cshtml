@@ -32,7 +32,7 @@
             display: none;
             position: absolute;
             background-color: #fff;
-            width: 250px; /* Adjust width as needed */
+            width: 250px; 
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
             z-index: 1;
             text-align: left;
@@ -47,8 +47,8 @@
 
         .dropdown-btn {
             display: block;
-            margin: 20px auto; /* Center the button */
-            padding: 15px 30px; /* Adjust padding as needed */
+            margin: 20px auto;
+            padding: 15px 30px; 
             border-radius: 30px !important;
             text-align: center;
             background-color: #007bff;
@@ -69,22 +69,39 @@
                 margin-right: 10px;
             }
 
+        .dropdown-content a {
+            display: block;
+            padding: 10px;
+            color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
+
+            .dropdown-content a i {
+                margin-right: 10px;
+            }
+
         .go-back-btn {
             display: block;
-            margin-right: 400px; /* Move "Go Back" button to the left */
-            margin-bottom: 20px; /* Adjust margin as needed */
+            margin-right: 400px; 
+            margin-bottom: 20px; 
             padding: 10px 20px;
-            border-radius: 5px !important; /* Reduced border-radius */
+            border-radius: 5px !important; 
             background-color: #ccc;
             color: #535353;
-            text-decoration: none; /* Remove underline */
+            text-decoration: none; 
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition */
+            transition: background-color 0.3s ease, transform 0.3s ease; 
         }
 
             .go-back-btn:hover {
-                background-color: #bbb; /* Darken the background color on hover */
-                transform: scale(1.05); /* Scale the button slightly on hover */
+                background-color: #bbb; 
+                transform: scale(1.05);
             }
     </style>
 </head>
@@ -93,29 +110,37 @@
         <h3 style="text-align: center;">Admin Panel</h3>
 
         <div class="dropdown-container">
-            <!-- "Go Back" button -->
             <a href="@Url.Action("Login", "Authenticate")" class="go-back-btn"><i class="fas fa-arrow-left"></i> Go Back</a>
 
             <div class="dropdown">
                 <button class="dropdown-btn"><i class="fas fa-cogs"></i> Manage Options</button>
                 <div class="dropdown-content">
-                    <a href="@Url.Action("Gyms", "Gym")" class="btn btn-primary">
+                    <a href="@Url.Action("Gyms", "Gym")">
                         <i class="fas fa-dumbbell"></i> Manage Gyms
                     </a>
-                    <a href="@Url.Action("Customers", "Customer")" class="btn btn-primary">
+                    <a href="@Url.Action("Customers", "Customer")">
                         <i class="fas fa-users"></i> Manage Customers
                     </a>
-                    <a href="@Url.Action("Coach", "Coaches")" class="btn btn-primary">
+                    <a href="@Url.Action("Coaches", "Coach")">
                         <i class="fas fa-user-tie"></i> Manage Coaches
                     </a>
-                    <a href="@Url.Action("Classes", "Class")" class="btn btn-primary">
+                    <a href="@Url.Action("Classes", "Class")">
                         <i class="far fa-calendar-alt"></i> Manage Classes
                     </a>
-                    <a href="@Url.Action("ClassTypes", "ClassType")" class="btn btn-primary">
+                    <a href="@Url.Action("ClassTypes", "ClassType")">
                         <i class="fas fa-tags"></i> Manage Class Types
                     </a>
-                    <a href="@Url.Action("Reservations", "Reservation")" class="btn btn-primary">
+                    <a href="@Url.Action("Reservations", "Reservation")">
                         <i class="far fa-calendar-check"></i> Manage Reservations
+                    </a>
+                    <a href="@Url.Action("Favourites", "Favourite")">
+                        <i class="fas fa-heart"></i> Manage Favourites
+                    </a>
+                    <a href="@Url.Action("GymCards", "GymCard")">
+                        <i class="fas fa-id-card"></i> Manage Gym Cards
+                    </a>
+                    <a href="@Url.Action("Reviews", "Review")">
+                        <i class="fas fa-star"></i> Manage Reviews
                     </a>
                 </div>
             </div>

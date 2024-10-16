@@ -5,7 +5,6 @@
 }
 
 @functions {
-    // Helper function to check if the gym membership is expired
     public bool IsExpired(DateTime expirationDate)
     {
         return DateTime.Today > expirationDate;
@@ -53,32 +52,32 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1rem 1.5rem; /* Adjusted padding */
+        padding: 1rem 1.5rem; 
         background-color: white;
         border: none;
         font-size: 1.1rem;
         cursor: pointer;
-        border-radius: 13px !important; /* Remove button border-radius for a rectangular shape */
+        border-radius: 13px !important; 
     }
 
     .menu-items {
-        width: auto; /* Adjust width as needed */
+        width: auto;
         height: auto;
         text-align: center;
-        margin: 20px auto; /* Center the button horizontally and add space around it */
-        background-color: #007bff; /* Button background color */
-        color: #ffffff; /* Button text color */
+        margin: 20px auto; 
+        background-color: #007bff; 
+        color: #ffffff;
         border: none;
         font-size: 1.1rem;
         cursor: pointer;
-        border-radius: 13px; /* Apply border-radius for a rounded shape */
-        padding: 15px; /* Adjust padding as needed */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add box shadow */
-        transition: background-color 0.3s ease; /* Smooth transition for background color */
+        border-radius: 13px;
+        padding: 15px; 
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+        transition: background-color 0.3s ease; 
     }
 
         .menu-items:hover {
-            background-color: #0056b3; /* Change background color on hover */
+            background-color: #0056b3; 
         }
 
 
@@ -121,9 +120,6 @@
 
 
 
-
-
-    /* Slide menu styles */
     .slide-menu {
         position: fixed;
         top: 50px;
@@ -134,37 +130,37 @@
         color: #000000;
         padding: 20px;
         box-sizing: border-box;
-        transition: transform 0.3s ease-in-out, left 0.3s ease-in-out; /* Add left transition */
+        transition: transform 0.3s ease-in-out, left 0.3s ease-in-out; 
         z-index: 1000;
-        transform: translateX(-250px); /* Initially hidden */
+        transform: translateX(-250px);
     }
 
         .slide-menu ul {
             list-style: none;
             padding: 0;
-            margin: 0; /* Remove default margin */
+            margin: 0; 
         }
 
             .slide-menu ul li {
-                margin-bottom: 10px; /* Adjust the margin as needed */
-                padding-left: 0; /* Remove padding from the left */
-                border-bottom: 1px solid #ffffff; /* Add bottom border */
+                margin-bottom: 10px; 
+                padding-left: 0; 
+                border-bottom: 1px solid #ffffff; 
             }
 
                 .slide-menu ul li:last-child {
-                    border-bottom: none; /* Remove border from the last item */
+                    border-bottom: none;
                 }
 
                 .slide-menu ul li a {
                     cursor: pointer;
-                    display: block; /* Ensure the whole area is clickable */
-                    padding: 10px; /* Add padding to the clickable area */
-                    border-radius: 15px; /* Optional: Add some border radius for better aesthetics */
-                    color: #ffffff; /* Change text color to white */
+                    display: block;
+                    padding: 10px; 
+                    border-radius: 15px; 
+                    color: #ffffff;
                 }
 
         .slide-menu.show {
-            transform: translateX(0); /* Slide in when shown */
+            transform: translateX(0); 
         }
 
     .menu-toggle {
@@ -182,7 +178,7 @@
         }
 
         .menu-toggle.show i {
-            transform: rotate(180deg); /* Rotate icon when menu shown */
+            transform: rotate(180deg); 
         }
 
 
@@ -227,7 +223,6 @@
         </button>
     }
 
-    <!-- Slide menu -->
     <div class="slide-menu" id="slideMenu">
         <ul>
             <li><a href="/Authenticate/Login"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
@@ -239,7 +234,6 @@
         </ul>
     </div>
 
-    <!-- Menu toggle button -->
     <div class="menu-toggle" onclick="toggleSlideMenu()">
         <i class="fas fa-bars"></i>
     </div>
@@ -252,7 +246,7 @@
             slideMenu.classList.toggle("show");
 
             var content = document.querySelector(".content");
-            content.classList.toggle("slide-in-content"); // Adjust content position when slide menu shown
+            content.classList.toggle("slide-in-content"); 
         }
 
         function handleButtonClick(url) {

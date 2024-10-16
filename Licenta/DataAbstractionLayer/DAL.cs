@@ -90,14 +90,12 @@ namespace Licenta.DataAbstractionLayer
                     MySqlCommand cmd = new MySqlCommand();
                     cmd.Connection = connection;
 
-                    // Check if the email exists
                     cmd.CommandText = "SELECT COUNT(*) FROM customer WHERE email = @email";
                     cmd.Parameters.AddWithValue("@email", userEmail);
                     int existingCount = Convert.ToInt32(cmd.ExecuteScalar());
 
                     if (existingCount > 0)
                     {
-                        // Update the password for the user with the specified email
                         cmd.CommandText = "UPDATE customer SET password = @newPassword WHERE email = @email";
                         cmd.Parameters.AddWithValue("@newPassword", newPassword);
 
@@ -127,20 +125,18 @@ namespace Licenta.DataAbstractionLayer
                     MySqlCommand cmd = new MySqlCommand();
                     cmd.Connection = connection;
 
-                    // Check if the username (surname) is already in use
-                    cmd.CommandText = "SELECT COUNT(*) FROM customer WHERE surname = @surname";
-                    cmd.Parameters.AddWithValue("@surname", customer.surname);
+                    cmd.CommandText = "SELECT COUNT(*) FROM customer WHERE email = @email";
+                    cmd.Parameters.AddWithValue("@email", customer.email);
                     int existingCount = Convert.ToInt32(cmd.ExecuteScalar());
 
                     if (existingCount == 0)
                     {
-                        // Insert the new customer into the database
                         cmd.CommandText = "INSERT INTO customer (surname, lastname, age, gender, email, password) " +
                                           "VALUES (@surname, @lastname, @age, @gender, @email, @password)";
+                        cmd.Parameters.AddWithValue("@surname", customer.surname);
                         cmd.Parameters.AddWithValue("@lastname", customer.lastname);
                         cmd.Parameters.AddWithValue("@age", customer.age);
                         cmd.Parameters.AddWithValue("@gender", customer.gender);
-                        cmd.Parameters.AddWithValue("@email", customer.email);
                         cmd.Parameters.AddWithValue("@password", customer.password);
 
                         cmd.ExecuteNonQuery();
@@ -171,14 +167,12 @@ namespace Licenta.DataAbstractionLayer
                     MySqlCommand cmd = new MySqlCommand();
                     cmd.Connection = connection;
 
-                    // Check if the username (surname) is already in use
                     cmd.CommandText = "SELECT COUNT(*) FROM gym WHERE name = @name";
                     cmd.Parameters.AddWithValue("@name", gym.name);
                     int existingCount = Convert.ToInt32(cmd.ExecuteScalar());
 
                     if (existingCount == 0)
                     {
-                        // Insert the new customer into the database
                         cmd.CommandText = "INSERT INTO gym (name, adress, openHour, closeHour, rating, password)" +
                             " VALUES (@name, @adress, @openHour, @closeHour, @rating, @password)";
 
@@ -240,14 +234,13 @@ namespace Licenta.DataAbstractionLayer
                         {
                             Customer customer = new Customer
                             {
-                                idc = reader.GetInt32("idc"), // Adjust the column names accordingly
+                                idc = reader.GetInt32("idc"), 
                                 surname = reader.GetString("surname"),
                                 lastname = reader.GetString("lastname"),
                                 age = reader.GetInt32("age"),
                                 gender = reader.GetString("gender"),
                                 email = reader.GetString("email"),
                                 password = reader.GetString("password")
-                                // Add other properties as needed
                             };
                             customers.Add(customer);
                         }
@@ -257,7 +250,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return customers;
@@ -418,10 +410,8 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
-            // Return a default value, for example, -1, to indicate failure or not found
             return -1;
         }
 
@@ -471,7 +461,6 @@ namespace Licenta.DataAbstractionLayer
                                 password = reader.GetString("password"),
 
 
-                                // Add other properties as needed
                             };
                             gyms.Add(gym);
                         }
@@ -481,7 +470,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return gyms;
@@ -643,7 +631,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return -1;
@@ -674,7 +661,6 @@ namespace Licenta.DataAbstractionLayer
             }
             catch (MySqlException e)
             {
-                // Handle exceptions as needed
                 Console.WriteLine(e.Message);
             }
 
@@ -684,7 +670,7 @@ namespace Licenta.DataAbstractionLayer
 
         public int GetGymPriceById(int gymId)
         {
-            int gymPrice = 0; // Default price
+            int gymPrice = 0; 
 
             try
             {
@@ -709,7 +695,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.WriteLine(e.Message);
-                // Handle exceptions as needed
             }
 
             return gymPrice;
@@ -778,7 +763,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return favouriteGyms;
@@ -920,9 +904,8 @@ namespace Licenta.DataAbstractionLayer
                                 trainerType = reader.GetString("trainerType"),
                                 phoneNumber = reader.GetString("phoneNumber"),
                                 email = reader.GetString("email"),
-                                photo = (byte[])reader["photo"], // Retrieve photo as byte array
+                                photo = (byte[])reader["photo"], 
                                 idg = reader.GetInt32("idg")
-                                // Add other properties as needed
                             };
                             coaches.Add(coach);
                         }
@@ -932,7 +915,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return coaches;
@@ -963,9 +945,8 @@ namespace Licenta.DataAbstractionLayer
                     coach.trainerType = reader.GetString("trainerType");
                     coach.phoneNumber = reader.GetString("phoneNumber");
                     coach.email = reader.GetString("email");
-                    coach.photo = (byte[])reader["photo"]; // Retrieve photo as byte array
+                    coach.photo = (byte[])reader["photo"];
                     coach.idg = reader.GetInt32("idg");
-                    // Add other properties as needed
                 }
 
                 reader.Close();
@@ -1006,7 +987,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.WriteLine(e.Message);
-                // Handle exceptions as needed
             }
 
             return coachName;
@@ -1033,7 +1013,6 @@ namespace Licenta.DataAbstractionLayer
                     cmd.Parameters.AddWithValue("@phoneNumber", coach.phoneNumber);
                     cmd.Parameters.AddWithValue("@email", coach.email);
 
-                    // Convert photo byte array to MySqlDbType.Blob and pass it as parameter
                     cmd.Parameters.Add("@photo", MySqlDbType.Blob).Value = coach.photo;
 
                     cmd.Parameters.AddWithValue("@idg", coach.idg);
@@ -1096,7 +1075,7 @@ namespace Licenta.DataAbstractionLayer
                     cmd.Parameters.AddWithValue("@trainerType", updatedCoach.trainerType);
                     cmd.Parameters.AddWithValue("@phoneNumber", updatedCoach.phoneNumber);
                     cmd.Parameters.AddWithValue("@email", updatedCoach.email);
-                    cmd.Parameters.Add("@photo", MySqlDbType.Blob).Value = updatedCoach.photo; // Convert photo byte array to MySqlDbType.Blob and pass it as parameter
+                    cmd.Parameters.Add("@photo", MySqlDbType.Blob).Value = updatedCoach.photo; 
                     cmd.Parameters.AddWithValue("@idg", updatedCoach.idg);
                     cmd.Parameters.AddWithValue("@id", updatedCoach.idco);
 
@@ -1143,9 +1122,8 @@ namespace Licenta.DataAbstractionLayer
                                 trainerType = reader.GetString("trainerType"),
                                 phoneNumber = reader.GetString("phoneNumber"),
                                 email = reader.GetString("email"),
-                                photo = (byte[])reader["photo"], // Retrieve photo as byte array
+                                photo = (byte[])reader["photo"], 
                                 idg = reader.GetInt32("idg"),
-                                // You may fetch the gym object if needed
                             };
 
                             coaches.Add(coach);
@@ -1156,7 +1134,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.WriteLine(e.Message);
-                // Handle exceptions as needed
             }
 
             return coaches;
@@ -1196,7 +1173,6 @@ namespace Licenta.DataAbstractionLayer
                                 idct = reader.GetInt32("idct"),
                                 type = reader.GetString("type"),
                                 difficulty = reader.GetInt32("difficulty")
-                                // Add other properties as needed
                             };
                             classTypes.Add(classType);
                         }
@@ -1206,7 +1182,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return classTypes;
@@ -1233,7 +1208,6 @@ namespace Licenta.DataAbstractionLayer
                     classType.idct = reader.GetInt32("idct");
                     classType.type = reader.GetString("type");
                     classType.difficulty = reader.GetInt32("difficulty");
-                    // Add other properties as needed
                 }
 
                 reader.Close();
@@ -1242,7 +1216,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return classType;
@@ -1274,7 +1247,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.WriteLine(e.Message);
-                // Handle exceptions as needed
             }
 
             return classTypeType;
@@ -1403,7 +1375,6 @@ namespace Licenta.DataAbstractionLayer
                                 description = reader.GetString("description"),
                                 date = reader.GetDateTime("date"),
                                 time = reader.GetTimeSpan("time")
-                                // Add other properties as needed
                             };
                             classes.Add(classInstance);
                         }
@@ -1413,7 +1384,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return classes;
@@ -1446,7 +1416,6 @@ namespace Licenta.DataAbstractionLayer
                             classInstance.description = reader.GetString("description");
                             classInstance.date = reader.GetDateTime("date");
                             classInstance.time = reader.GetTimeSpan("time");
-                            // Add other properties as needed
                         }
                     }
                 }
@@ -1454,7 +1423,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return classInstance;
@@ -1597,7 +1565,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return gymClasses;
@@ -1632,7 +1599,6 @@ namespace Licenta.DataAbstractionLayer
                                 description = reader.GetString("description"),
                                 date = reader.GetDateTime("date"),
                                 time = reader.GetTimeSpan("time")
-                                // You may fetch related entities if needed
                             };
 
                             classes.Add(classObj);
@@ -1643,7 +1609,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.WriteLine(e.Message);
-                // Handle exceptions as needed
             }
 
             return classes;
@@ -1683,7 +1648,7 @@ namespace Licenta.DataAbstractionLayer
                                 description = reader.GetString("description"),
                                 date = reader.GetDateTime("date"),
                                 time = reader.GetTimeSpan("time"),
-                                CoachName = reader.GetString("coachName") // Retrieve coach name
+                                CoachName = reader.GetString("coachName") 
                             };
 
                             gymClasses.Add(gymClass);
@@ -1694,7 +1659,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return gymClasses;
@@ -1722,10 +1686,8 @@ namespace Licenta.DataAbstractionLayer
                         {
                             Coach coach = new Coach
                             {
-                                // Assuming the column names in the database match the property names in the Coach class
                                 idco = Convert.ToInt32(reader["idco"]),
                                 name = reader["name"].ToString(),
-                                // Add other properties as needed
                             };
 
                             coaches.Add(coach);
@@ -1777,7 +1739,6 @@ namespace Licenta.DataAbstractionLayer
                                 idcl = reader.GetInt32("idcl"),
                                 Date = reader.GetDateTime("date"),
                                 Time = reader.GetTimeSpan("time")
-                                // Add other properties as needed
                             };
                             reservations.Add(reservation);
                         }
@@ -1787,7 +1748,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return reservations;
@@ -1816,7 +1776,6 @@ namespace Licenta.DataAbstractionLayer
                     reservation.idcl = reader.GetInt32("idcl");
                     reservation.Date = reader.GetDateTime("date");
                     reservation.Time = reader.GetTimeSpan("time");
-                    // Add other properties as needed
                 }
 
                 reader.Close();
@@ -1825,7 +1784,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return reservation;
@@ -1945,7 +1903,6 @@ namespace Licenta.DataAbstractionLayer
                         idcl = reader.GetInt32("idcl"),
                         Date = reader.GetDateTime("date"),
                         Time = reader.GetTimeSpan("time")
-                        // Add other properties as needed
                     };
 
                     reservations.Add(reservation);
@@ -1957,7 +1914,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return reservations;
@@ -1999,7 +1955,6 @@ namespace Licenta.DataAbstractionLayer
                                 rating = reader.GetFloat("rating"),
                                 customerEmail = reader.GetString("customerEmail")
 
-                                // Add other properties as needed
                             };
                             reviews.Add(review);
                         }
@@ -2009,7 +1964,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.WriteLine(e.Message);
-                // Handle exceptions as needed
             }
 
             return reviews;
@@ -2041,7 +1995,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.WriteLine(e.Message);
-                // Handle exceptions as needed
             }
         }
 
@@ -2074,10 +2027,7 @@ namespace Licenta.DataAbstractionLayer
                                     description = reader.GetString("description"),
                                     rating = reader.GetFloat("rating"),
                                     customerEmail = reader.GetString("customerEmail")
-                                    // You might need to fetch Gym and Customer objects based on their IDs
                                 };
-
-                                // Add the review to the list
                                 reviews.Add(review);
                             }
                         }
@@ -2086,23 +2036,11 @@ namespace Licenta.DataAbstractionLayer
             }
             catch (MySqlException ex)
             {
-                // Handle exception
                 Console.WriteLine("Error: " + ex.Message);
             }
 
             return reviews;
         }
-
-
-
-
-
-
-
-
-
-
-
 
 
         public List<GymCard> GetGymCardsByCustomerId(int customerId)
@@ -2136,7 +2074,6 @@ namespace Licenta.DataAbstractionLayer
                                 {
                                     idg = reader.GetInt32("idg"),
                                     name = reader.GetString("gymName"),
-                                    // Add other properties as needed
                                 }
                             };
 
@@ -2148,7 +2085,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.Write(e.Message);
-                // Handle exceptions as needed
             }
 
             return gymCards;
@@ -2179,7 +2115,6 @@ namespace Licenta.DataAbstractionLayer
             catch (MySqlException e)
             {
                 Console.WriteLine(e.Message);
-                // Handle exceptions as needed
             }
         }
 

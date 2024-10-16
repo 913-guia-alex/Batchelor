@@ -5,14 +5,12 @@
     ViewBag.Title = "Classes";
 }
 
-<!-- Add these scripts before the closing </body> tag -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
 
 <style>
-    /* Add this style block in the head section of your HTML */
     .btn-transition {
         transition: background-color 0.3s ease;
     }
@@ -22,15 +20,14 @@
             color: white;
         }
 
-    /* Adjusted style for search bar alignment */
     .search-container {
         margin-bottom: 10px;
         display: flex;
-        justify-content: flex-end; /* Align to the right */
+        justify-content: flex-end;
     }
 
         .search-container input {
-            width: 200px; /* Adjust as needed */
+            width: 200px; 
             margin-left: 10px;
         }
 
@@ -46,9 +43,9 @@
         width: 100px;
         position: absolute;
         display: flex;
-        top: 115px; /* Adjusted top position */
-        left: 215px; /* Adjusted left position */
-        z-index: 1000; /* Ensure the dropdown is above other elements */
+        top: 115px; 
+        left: 215px; 
+        z-index: 1000; 
     }
 
     .dropdown-toggle {
@@ -59,23 +56,23 @@
         cursor: pointer;
         width: 150px;
         display: flex;
-        align-items: center; /* Center items vertically */
-        justify-content: space-between; /* Add space between text and icon */
+        align-items: center;
+        justify-content: space-between; 
     }
 
         .dropdown-toggle span {
             display: flex;
-            align-items: center; /* Center items vertically */
+            align-items: center;
         }
 
         .dropdown-toggle i {
-            margin: 0.3rem; /* Adjust spacing between text and icon */
+            margin: 0.3rem; 
         }
 
     .dropdown-menu {
         position: absolute;
-        top: 100%; /* Adjusted position to be under the dropdown button */
-        left: 0; /* Adjusted position to be aligned with the left side */
+        top: 100%; 
+        left: 0; 
         border: 1px solid #ccc;
         border-radius: 1rem;
         padding: 0;
@@ -96,21 +93,15 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1rem 1.5rem; /* Adjusted padding */
+        padding: 1rem 1.5rem; 
         border: none;
         font-size: 1.1rem;
         cursor: pointer;
-        border-radius: 13px !important; /* Remove button border-radius for a rectangular shape */
+        border-radius: 13px !important; 
     }
 
 
 
-
-
-
-
-
-    /* Modal styles */
     .modal-container {
         display: none;
         position: fixed;
@@ -147,9 +138,8 @@
         border-radius: 5px;
         cursor: pointer;
     }
-        /* Add hover animations to the buttons */
         .button:hover {
-            transform: scale(1.05); /* Scale the button slightly on hover */
+            transform: scale(1.05); 
             transition: transform 0.3s ease;
         }
 
@@ -160,7 +150,7 @@
     }
 
         .cancel-button:hover {
-            background-color: #bbb; /* Darken the background color on hover */
+            background-color: #bbb; 
         }
 
     .delete-button {
@@ -169,39 +159,36 @@
     }
 
         .delete-button:hover {
-            background-color: #c0392b; /* Darken the background color on hover */
+            background-color: #c0392b;
         }
 </style>
 <div class="container">
 
     <h2 style="text-align: center;">Admin Panel - Classes</h2>
 
-    <!-- Filter Dropdown -->
     <div class="dropdown">
         <div class="dropdown-toggle" onclick="toggleDropdown()">
             <span>
-                <i class="fas fa-sort"></i> <!-- Sort icon -->
+                <i class="fas fa-sort"></i>
                 Sort
             </span>
         </div>
         <ul class="dropdown-menu" id="dropdownMenu">
             <li class="menu-items" onclick="handleButtonClick('sortByType')">
-                <i class="fas fa-sort-alpha-down"></i> <!-- Alphabetical sort icon -->
+                <i class="fas fa-sort-alpha-down"></i> 
                 SortByType
             </li>
             <li class="menu-items" onclick="handleButtonClick('sortByDifficulty')">
-                <i class="fas fa-sort-numeric-down"></i> <!-- Numeric sort icon -->
+                <i class="fas fa-sort-numeric-down"></i> 
                 SortByDifficulty
             </li>
         </ul>
     </div>
 
-    <!-- Search Bar -->
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search..." class="form-control">
     </div>
 
-    <!-- Class List Table -->
     <table class="table">
         <thead>
             <tr>
@@ -225,7 +212,6 @@
                     <td>@classItem.description</td>
                     <td>@classItem.date.ToShortDateString()</td>
                     <td>@classItem.time.ToString(@"hh\:mm")</td>
-                    <!-- Display coach's name and class type's type -->
                     <td>@classItem.CoachName</td>
                     <td>@classItem.ClassTypeType</td>
 
@@ -241,7 +227,6 @@
         </tbody>
     </table>
 
-    <!-- Add a new class button -->
     <div class="row">
         <div class="col-md-6">
             <a href="/Class/AddClass" class="btn btn-secondary btn-transition">Add a new class</a>
@@ -252,7 +237,6 @@
     </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
 <div id="deleteModal" class="modal-container">
     <div class="modal-content">
         <h2>Delete Confirmation</h2>
@@ -271,15 +255,14 @@
 </div>
 
 <script>
-    // Sort function to sort class types by type alphabetically
     function sortByType() {
         var rows = $("table tbody tr").get();
 
         rows.sort(function (rowA, rowB) {
-            var typeA = $(rowA).find("td:eq(1)").text().toUpperCase(); // Extract type value from cell and convert to uppercase for case-insensitive comparison
-            var typeB = $(rowB).find("td:eq(1)").text().toUpperCase(); // Extract type value from cell and convert to uppercase for case-insensitive comparison
+            var typeA = $(rowA).find("td:eq(1)").text().toUpperCase(); 
+            var typeB = $(rowB).find("td:eq(1)").text().toUpperCase(); 
 
-            return typeA.localeCompare(typeB); // Sort alphabetically
+            return typeA.localeCompare(typeB);
         });
 
         $.each(rows, function (index, row) {
@@ -289,15 +272,14 @@
 
 
 
-    // Sort function to sort class types by difficulty in ascending order
     function sortByDifficulty() {
         var rows = $("table tbody tr").get();
 
         rows.sort(function (rowA, rowB) {
-            var difficultyA = parseInt($(rowA).find("td:eq(2)").text()); // Extract difficulty value from cell and parse as integer
-            var difficultyB = parseInt($(rowB).find("td:eq(2)").text()); // Extract difficulty value from cell and parse as integer
+            var difficultyA = parseInt($(rowA).find("td:eq(2)").text()); 
+            var difficultyB = parseInt($(rowB).find("td:eq(2)").text()); 
 
-            return difficultyA - difficultyB; // Sort in ascending order by difficulty
+            return difficultyA - difficultyB; 
         });
 
         $.each(rows, function (index, row) {
@@ -305,7 +287,6 @@
         });
     }
 
-    // Function to filter customers based on search input
     $(document).ready(function () {
         $("#searchInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
@@ -340,7 +321,6 @@
             url: "/Class/DeleteClass",
             data: { id: classid },
             success: function () {
-                // Refresh the gym list (replace with your actual refresh logic)
                 location.reload();
             }
         });
@@ -363,7 +343,7 @@
 
     $(document).on("click", function (event) {
         if (!$(event.target).closest(".dropdown").length && $("#dropdownMenu").css("display") === "block") {
-            toggleDropdown(); // Retract dropdown menu if it's shown
+            toggleDropdown(); 
         }
     });
 
@@ -371,34 +351,29 @@
 
 
     function GetClassType(idct, classItemId) {
-        // Assuming you have a method in your DAL to fetch class type by ID asynchronously
         $.ajax({
             type: "GET",
             url: "/ClassType/GetClassType",
             data: { id: idct },
             success: function (data) {
-                // Assuming your data contains the class type name
                 $("#classType_" + classItemId).text(data.type);
             },
             error: function () {
-                $("#classType_" + classItemId).text(""); // Set empty string if there's an error
+                $("#classType_" + classItemId).text(""); 
             }
         });
     }
 
-    // Function to fetch coach based on its ID
     function GetCoach(idco, classItemId) {
-        // Assuming you have a method in your DAL to fetch coach by ID asynchronously
         $.ajax({
             type: "GET",
             url: "/Coach/GetCoach",
             data: { id: idco },
             success: function (data) {
-                // Assuming your data contains the coach name
                 $("#coach_" + classItemId).text(data.name);
             },
             error: function () {
-                $("#coach_" + classItemId).text(""); // Set empty string if there's an error
+                $("#coach_" + classItemId).text(""); 
             }
         });
     }

@@ -153,6 +153,11 @@
 
     <h2 style="text-align: center; font-size: 32px; padding-top: 30px;">All Gyms</h2>
 
+    <div class="redirect-container" style="text-align: center; margin-bottom: 20px;">
+        <i class="fas fa-arrow-left" id="redirectArrow" style="cursor: pointer; font-size: 24px;"></i>
+        <span id="goBackText" style="cursor: pointer; font-size: 24px; margin-left: 10px;">Go Back</span>
+    </div>
+
 
     <!-- Search Bar -->
     <div class="search-container">
@@ -204,22 +209,27 @@
     }
 
     function getCustomerId() {
-        // Extract customer ID from the current URL
         var url = window.location.href;
-        var customerIdIndex = url.lastIndexOf("/") + 1; // Find the index of the last '/'
-        var customerId = url.substr(customerIdIndex); // Extract the substring after the last '/'
+        var customerIdIndex = url.lastIndexOf("/") + 1;
+        var customerId = url.substr(customerIdIndex);
 
-        // Check if the extracted value is a valid customer ID
         if (!isNaN(customerId) && parseInt(customerId) > 0) {
-            // Return the customer ID if it's valid
             return parseInt(customerId);
         } else {
-            // If the extracted value is not valid, prompt the user to log in
             alert("Please log in to access this feature.");
-            // Redirect the user to the login page
-            window.location.href = "/Account/Login"; // Replace "/Account/Login" with your actual login page URL
+            window.location.href = "/Account/Login";
         }
     }
+
+    // Add event listener to the arrow icon
+    $(document).ready(function () {
+        $("#redirectArrow").click(function () {
+            var customerId = getCustomerId();
+            window.location.href = "/Customer/Main/" + customerId;
+        });
+
+        console.log("jQuery loaded successfully!"); // Check if jQuery is loaded
+    });
 
     // Function to show the status message
     function showStatusMessage(message) {

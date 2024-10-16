@@ -9,19 +9,16 @@ namespace Licenta.Controllers
     {
         private DAL dal = new DAL();
 
-        // GET: Password/ResetPassword
         public ActionResult ResetPassword()
         {
             return View();
         }
 
-        // POST: Password/ResetPassword
         [HttpPost]
         public ActionResult ResetPassword(ResetPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
-                // Call the DAL method to reset the password
                 bool success = dal.ResetPassword(model.Email, model.NewPassword);
 
                 if (success)
@@ -29,10 +26,8 @@ namespace Licenta.Controllers
                     ViewBag.SuccessMessage = "Password reset successfully!";
                     return RedirectToAction("Login", "Authenticate");
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Failed to reset the password. Please check your email and try again.");
-                }
+                ModelState.AddModelError("", "Email not found. Try another email"); 
+                
             }
 
             return View(model);

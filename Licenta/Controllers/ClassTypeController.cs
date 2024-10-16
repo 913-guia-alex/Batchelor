@@ -10,7 +10,7 @@ namespace Licenta.Controllers
 {
     public class ClassTypeController : Controller
     {
-        private DAL dal = new DAL(); // Create an instance of your DAL
+        private DAL dal = new DAL(); 
 
         public ActionResult Index()
         {
@@ -72,7 +72,6 @@ namespace Licenta.Controllers
         public ActionResult SaveAddedClassType()
         {
             ClassType classType = new ClassType();
-            //doc.Id = int.Parse(Request.Params["docID"]);
             classType.type = Request.Params["type"];
             classType.difficulty = int.Parse(Request.Params["difficulty"]);
             DAL dal = new DAL();

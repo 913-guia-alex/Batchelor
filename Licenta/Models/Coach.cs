@@ -19,9 +19,8 @@ namespace Licenta.Models
         public string phoneNumber { get; set; }
 
         public string email { get; set; }
-        public byte[] photo { get; set; } // Photo as byte array (BLOB)
+        public byte[] photo { get; set; } 
 
-        // Foreign key for the gym
         public int idg { get; set; }
         public Gym Gym { get; set; }
     }

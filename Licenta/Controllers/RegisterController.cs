@@ -13,7 +13,6 @@ namespace Licenta.Controllers
     {
         private DAL dal = new DAL();
 
-        // GET: Authenticate
         public ActionResult RegisterCustomer()
         {
             return View();
@@ -36,11 +35,10 @@ namespace Licenta.Controllers
 
             if (registrationSuccess)
             {
-                // Redirect to the Documents view upon successful login
                 return RedirectToAction("Login", "Authenticate");
             }
 
-            ModelState.AddModelError("", "Registration failed. Please check your input and try again."); // Replace with an appropriate registration error message
+            ModelState.AddModelError("", "Registration failed. Please check your input and try again."); 
             return View(customer);
         }
 
@@ -57,11 +55,10 @@ namespace Licenta.Controllers
 
             if (registrationSuccess)
             {
-                // Redirect to the Documents view upon successful login
                 return RedirectToAction("Login", "Authenticate");
             }
 
-            ModelState.AddModelError("", "Registration failed. Please check your input and try again."); // Replace with an appropriate registration error message
+            ModelState.AddModelError("", "Registration failed. Please check your input and try again.");
             return View(gym);
         }
     }

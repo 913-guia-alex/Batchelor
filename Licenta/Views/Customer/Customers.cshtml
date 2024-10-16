@@ -4,14 +4,12 @@
     ViewBag.Title = "Customers";
 }
 
-<!-- Add these scripts before the closing </body> tag -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
 
 <style>
-    /* Add this style block in the head section of your HTML */
     .btn-transition {
         transition: background-color 0.3s ease;
     }
@@ -21,23 +19,16 @@
             color: white;
         }
 
-    /* Adjusted style for search bar alignment */
     .search-container {
         margin-bottom: 10px;
         display: flex;
-        justify-content: flex-end; /* Align to the right */
+        justify-content: flex-end;
     }
 
         .search-container input {
-            width: 200px; /* Adjust as needed */
+            width: 200px; 
             margin-left: 10px;
         }
-
-
-
-
-
-
 
 
     .dropdown {
@@ -45,9 +36,9 @@
         width: 100px;
         position: absolute;
         display: flex;
-        top: 115px; /* Adjusted top position */
-        left: 215px; /* Adjusted left position */
-        z-index: 1000; /* Ensure the dropdown is above other elements */
+        top: 115px; 
+        left: 215px;
+        z-index: 1000; 
     }
 
     .dropdown-toggle {
@@ -58,23 +49,23 @@
         cursor: pointer;
         width: 150px;
         display: flex;
-        align-items: center; /* Center items vertically */
-        justify-content: space-between; /* Add space between text and icon */
+        align-items: center;
+        justify-content: space-between; 
     }
 
         .dropdown-toggle span {
             display: flex;
-            align-items: center; /* Center items vertically */
+            align-items: center; 
         }
 
         .dropdown-toggle i {
-            margin: 0.3rem; /* Adjust spacing between text and icon */
+            margin: 0.3rem; 
         }
 
     .dropdown-menu {
         position: absolute;
-        top: 100%; /* Adjusted position to be under the dropdown button */
-        left: 0; /* Adjusted position to be aligned with the left side */
+        top: 100%; 
+        left: 0;
         border: 1px solid #ccc;
         border-radius: 1rem;
         padding: 0;
@@ -95,21 +86,14 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1rem 1.5rem; /* Adjusted padding */
+        padding: 1rem 1.5rem; 
         border: none;
         font-size: 1.1rem;
         cursor: pointer;
-        border-radius: 13px !important; /* Remove button border-radius for a rectangular shape */
+        border-radius: 13px !important; 
     }
 
 
-
-
-
-
-
-
-    /* Modal styles */
     .modal-container {
         display: none;
         position: fixed;
@@ -146,9 +130,8 @@
         border-radius: 5px;
         cursor: pointer;
     }
-        /* Add hover animations to the buttons */
         .button:hover {
-            transform: scale(1.05); /* Scale the button slightly on hover */
+            transform: scale(1.05); 
             transition: transform 0.3s ease;
         }
 
@@ -159,7 +142,7 @@
     }
 
         .cancel-button:hover {
-            background-color: #bbb; /* Darken the background color on hover */
+            background-color: #bbb; 
         }
 
     .delete-button {
@@ -168,7 +151,7 @@
     }
 
         .delete-button:hover {
-            background-color: #c0392b; /* Darken the background color on hover */
+            background-color: #c0392b;
         }
 </style>
 
@@ -176,11 +159,10 @@
 <h2 style="text-align: center;">Admin Panel - Customers</h2>
 
 
-<!-- Filter Dropdown -->
 <div class="dropdown">
     <div class="dropdown-toggle" onclick="toggleDropdown()">
         <span>
-            <i class="fas fa-sort"></i> <!-- Sort icon -->
+            <i class="fas fa-sort"></i> 
             Sort
         </span>
     </div>
@@ -201,12 +183,10 @@
 </div>
 
 
-<!-- Search Bar -->
 <div class="search-container">
     <input type="text" id="searchInput" placeholder="Search..." class="form-control">
 </div>
 
-<!-- Gym List Table -->
 <table class="table">
     <tr>
         <th>#</th>
@@ -246,7 +226,6 @@
 </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
 <div id="deleteModal" class="modal-container">
     <div class="modal-content">
         <h2>Delete Confirmation</h2>
@@ -271,7 +250,6 @@
 
 
 <script>
-    // Function to filter customers based on search input
     $(document).ready(function () {
         $("#searchInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
@@ -287,7 +265,6 @@
             url: "/Customer/DeleteCustomer",
             data: { id: customerId },
             success: function () {
-                // Refresh the customer list (replace with your actual refresh logic)
                 location.reload();
             }
         });
@@ -331,15 +308,13 @@
 
 
 
-    // Function to sort by surname
     function sortBySurname() {
         var rows = $("table tbody tr").get();
 
         rows.sort(function (rowA, rowB) {
-            var surnameA = $(rowA).find("td:eq(1)").text().toUpperCase(); // Extract surname value from cell and convert to uppercase for case-insensitive comparison
-            var surnameB = $(rowB).find("td:eq(1)").text().toUpperCase(); // Extract surname value from cell and convert to uppercase for case-insensitive comparison
-
-            return surnameA.localeCompare(surnameB); // Sort alphabetically
+            var surnameA = $(rowA).find("td:eq(1)").text().toUpperCase(); 
+            var surnameB = $(rowB).find("td:eq(1)").text().toUpperCase(); 
+            return surnameA.localeCompare(surnameB);
         });
 
         $.each(rows, function (index, row) {
@@ -347,15 +322,14 @@
         });
     }
 
-    // Function to sort by lastname
     function sortByLastname() {
         var rows = $("table tbody tr").get();
 
         rows.sort(function (rowA, rowB) {
-            var lastnameA = $(rowA).find("td:eq(2)").text().toUpperCase(); // Extract lastname value from cell and convert to uppercase for case-insensitive comparison
-            var lastnameB = $(rowB).find("td:eq(2)").text().toUpperCase(); // Extract lastname value from cell and convert to uppercase for case-insensitive comparison
+            var lastnameA = $(rowA).find("td:eq(2)").text().toUpperCase(); 
+            var lastnameB = $(rowB).find("td:eq(2)").text().toUpperCase(); 
 
-            return lastnameA.localeCompare(lastnameB); // Sort alphabetically
+            return lastnameA.localeCompare(lastnameB); 
         });
 
         $.each(rows, function (index, row) {
@@ -363,15 +337,14 @@
         });
     }
 
-    // Function to sort by age
     function sortByAge() {
         var rows = $("table tbody tr").get();
 
         rows.sort(function (rowA, rowB) {
-            var ageA = parseInt($(rowA).find("td:eq(3)").text()); // Extract age value from cell and convert to integer
-            var ageB = parseInt($(rowB).find("td:eq(3)").text()); // Extract age value from cell and convert to integer
+            var ageA = parseInt($(rowA).find("td:eq(3)").text()); 
+            var ageB = parseInt($(rowB).find("td:eq(3)").text()); 
 
-            return ageA - ageB; // Sort numerically
+            return ageA - ageB; 
         });
 
         $.each(rows, function (index, row) {
@@ -382,7 +355,7 @@
 
     $(document).on("click", function (event) {
         if (!$(event.target).closest(".dropdown").length && $("#dropdownMenu").css("display") === "block") {
-            toggleDropdown(); // Retract dropdown menu if it's shown
+            toggleDropdown();
         }
     });
 

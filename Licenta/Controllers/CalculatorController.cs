@@ -23,21 +23,17 @@ namespace Licenta.Controllers
 
         public ActionResult Calories()
         {
-            // Handle the admin panel action
             return View("Calories");
         }
 
         [HttpPost]
         public ActionResult Calories(CaloriesCalculator model)
         {
-            // Validate the model
             if (!ModelState.IsValid)
             {
-                // If the model is not valid, return the same view with validation errors
                 return View("Calories", model);
             }
 
-            // Calculate necessary calories based on the user's input
             double calories;
             if (model.Gender == "Male")
             {
@@ -48,44 +44,34 @@ namespace Licenta.Controllers
                 calories = (10 * model.Weight) + (6.25 * model.Height) - (5 * model.Age) - 161;
             }
 
-            // Handle the goal to adjust calories if needed
             if (model.Goal == "Lose Weight")
             {
-                // Adjust calories for losing weight
-                calories -= 200; // For example, subtract 500 calories for weight loss
+                calories -= 200; 
             }
             else if (model.Goal == "Gain Weight")
             {
-                // Adjust calories for gaining weight
-                calories += 200; // For example, add 500 calories for weight gain
+                calories += 200; 
             }
 
-            // Redirect to the CaloriesResult action with the calculated calories
             return RedirectToAction("CaloriesResult", new { calories = calories });
         }
 
         public ActionResult CaloriesResult(double? calories)
         {
-            // Check if calories is null, if so, assign a default value (0 in this case)
             double caloriesValue = calories ?? 0;
 
-            // Pass the calculated calories to the view
             ViewBag.Calories = caloriesValue;
 
-            // Return the CaloriesResult view
             return View("CaloriesResult");
         }
 
         [HttpPost]
         public ActionResult SendEmailWithPDF(string email)
         {
-            // Generate PDF
             byte[] pdfBytes = GeneratePDF();
 
-            // Send PDF as an attachment to the provided email
             SendEmailWithAttachment(email, pdfBytes);
 
-            // Redirect back to the calories result page
             return RedirectToAction("CaloriesResult");
         }
 
@@ -106,7 +92,6 @@ namespace Licenta.Controllers
 
         private void SendEmailWithAttachment(string email, byte[] attachmentBytes)
         {
-            // Your SMTP server settings from App.config or Web.config
             string hostName = ConfigurationManager.AppSettings["SMTPServer"];
             string userName = ConfigurationManager.AppSettings["SMTPUserName"];
             string password = ConfigurationManager.AppSettings["SMTPPassword"];
@@ -118,16 +103,13 @@ namespace Licenta.Controllers
             mailMessage.Subject = "Your Custom PDF";
             mailMessage.Body = "Please find attached the PDF you requested.";
 
-            // Attach the PDF
             MemoryStream stream = new MemoryStream(attachmentBytes);
             mailMessage.Attachments.Add(new Attachment(stream, "C:\\Users\\Alex\\Desktop\\Licenta\\LicentaPDF.pdf"));
 
-            // Initialize SMTP client with settings from App.config or Web.config
             SmtpClient smtpClient = new SmtpClient(hostName, portNumber);
             smtpClient.Credentials = new NetworkCredential(userName, password);
             smtpClient.EnableSsl = true;
 
-            // Send email
             smtpClient.Send(mailMessage);
         }
     }

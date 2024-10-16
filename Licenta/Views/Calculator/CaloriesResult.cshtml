@@ -10,14 +10,14 @@
     <title>@ViewBag.Title</title>
     <style>
         .calories-result-page {
-            min-height: 100vh; /* Ensure the page takes up at least the full viewport height */
+            min-height: 100vh; 
             display: flex;
             flex-direction: column;
         }
 
         .calories-result-container {
             max-width: 600px;
-            margin: 50px auto; /* Adjust margin as needed */
+            margin: 50px auto; 
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -48,17 +48,16 @@
         }
 
         .footer {
-            margin-top: auto; /* Push footer to the bottom */
+            margin-top: auto; 
             text-align: center;
             color: #666;
-            padding: 20px 0; /* Add padding to footer */
+            padding: 20px 0; 
         }
 
-        /* Go back arrow styles */
         .go-back-arrow {
             margin-top: 20px;
             font-size: 24px;
-            color: #007bff; /* Adjust color as needed */
+            color: #007bff; 
             text-decoration: none;
         }
     </style>
@@ -72,7 +71,6 @@
             <p class="calories-value">@ViewBag.Calories</p>
         </div>
 
-        <!-- Email form -->
         <div class="email-form-container">
             <form method="post" action="@Url.Action("SendEmailWithPDF")">
                 <label for="email">Enter your email:</label>

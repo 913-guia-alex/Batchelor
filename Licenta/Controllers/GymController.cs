@@ -11,7 +11,7 @@ namespace Licenta.Controllers
 {
     public class GymController : Controller
     {
-        private DAL dal = new DAL(); // Create an instance of your DAL
+        private DAL dal = new DAL();
 
         public ActionResult Index()
         {
@@ -38,43 +38,6 @@ namespace Licenta.Controllers
             ViewBag.AllGyms = gyms;
             return View();
         }
-
-
-        /*        public ActionResult AllGymCustomer()
-                {
-                    // Fetch gyms from the data source
-                    List<Gym> gyms = dal.GetAllGyms();
-
-                    // Pass the gyms and customer ID to the view
-                    ViewBag.AllGyms = gyms;
-                    ViewBag.CustomerId = getCustomerId(); // Pass the customer ID to the view
-
-                    return View();
-                }
-
-                // Method to fetch the customer ID
-                private int getCustomerId()
-                {
-                    // Extract customer ID from the session or any other source
-                    int customerId = 0; // Initialize the customer ID variable
-
-                    // Check if the session contains the customer ID
-                    if (Session["CustomerId"] != null)
-                    {
-                        // If the session contains the customer ID, retrieve it
-                        customerId = (int)Session["CustomerId"];
-                    }
-                    else
-                    {
-                        // If the session does not contain the customer ID, handle the case accordingly
-                        // For example, redirect the user to the login page
-                        // Or display a message indicating that the user is not logged in
-                    }
-
-                    return customerId;
-                }*/
-
-
 
 
         public ActionResult AddGym()
@@ -117,7 +80,6 @@ namespace Licenta.Controllers
         public ActionResult SaveAddedGym()
         {
             Gym gym = new Gym();
-            //doc.Id = int.Parse(Request.Params["docID"]);
             gym.name = Request.Params["name"];
             gym.adress = Request.Params["adress"];
             gym.openHour = Request.Params["openHour"];
@@ -135,19 +97,15 @@ namespace Licenta.Controllers
 
         public ActionResult GymCoaches(int id)
         {
-            // Retrieve customer details from the database based on the provided ID
             Gym gym = dal.GetGym(id);
 
             if (gym == null)
             {
-                // Handle the case where the customer is not found
                 return HttpNotFound();
             }
 
-            // Retrieve gym cards associated with the customer
             List<Coach> coaches = dal.GetCoachesByGymId(id);
 
-            // Pass both customer and gym cards to the view
             ViewBag.Gym = gym;
             ViewBag.Coach = coaches;
 
@@ -157,19 +115,15 @@ namespace Licenta.Controllers
 
         public ActionResult GymDetails(int id)
         {
-            // Retrieve gym details from the database based on the provided ID
             Gym gym = dal.GetGym(id);
 
             if (gym == null)
             {
-                // Handle the case where the gym is not found
                 return HttpNotFound();
             }
 
-            // Retrieve coaches associated with the gym
             List<Coach> coaches = dal.GetCoachesByGymId(id);
 
-            // Pass the gym and coaches to the view
             ViewBag.Coaches = coaches;
             return View(gym);
         }

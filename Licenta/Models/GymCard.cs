@@ -8,8 +8,8 @@ namespace Licenta.Models
         public class GymCard
         {
             public int idgc { get; set; }
-            public int idc { get; set; } // Customer ID (foreign key)
-            public int idg { get; set; } // Gym ID (foreign key)
+            public int idc { get; set; } 
+            public int idg { get; set; } 
             public int price { get; set; }
             public DateTime madeDate { get; set; }
             public DateTime expirationDate { get; set; }

@@ -39,31 +39,25 @@
         }
 
 
-    .menu-items {
-        width: 170px;
+    .center-button {
         display: flex;
+        justify-content: center;
         align-items: center;
-        justify-content: space-between;
-        padding: 1rem 1.5rem; /* Adjusted padding */
-        background-color: white;
-        border: none;
-        font-size: 1.1rem;
-        cursor: pointer;
-        border-radius: 13px !important; /* Remove button border-radius for a rectangular shape */
+        margin-top: 20px;
     }
 
+
     .menu-items {
-        width: auto;
-        height: auto;
+        display: inline-block;
         text-align: center;
         margin: 20px auto;
         background-color: #007bff;
         color: #ffffff;
         border: none;
-        font-size: 1.1rem;
+        font-size: 0.9rem; 
         cursor: pointer;
         border-radius: 13px;
-        padding: 15px;
+        padding: 10px 15px; 
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         transition: background-color 0.3s ease;
     }
@@ -116,7 +110,6 @@
                 color: #0056b3;
             }
 
-    /* Slide menu styles */
     .slide-menu {
         position: fixed;
         top: 50px;
@@ -127,37 +120,37 @@
         color: #000000;
         padding: 20px;
         box-sizing: border-box;
-        transition: transform 0.3s ease-in-out, left 0.3s ease-in-out; /* Add left transition */
+        transition: transform 0.3s ease-in-out, left 0.3s ease-in-out; 
         z-index: 1000;
-        transform: translateX(-250px); /* Initially hidden */
+        transform: translateX(-250px); 
     }
 
         .slide-menu ul {
             list-style: none;
             padding: 0;
-            margin: 0; /* Remove default margin */
+            margin: 0; 
         }
 
             .slide-menu ul li {
-                margin-bottom: 10px; /* Adjust the margin as needed */
-                padding-left: 0; /* Remove padding from the left */
-                border-bottom: 1px solid #ffffff; /* Add bottom border */
+                margin-bottom: 10px; 
+                padding-left: 0; 
+                border-bottom: 1px solid #ffffff; 
             }
 
                 .slide-menu ul li:last-child {
-                    border-bottom: none; /* Remove border from the last item */
+                    border-bottom: none; 
                 }
 
                 .slide-menu ul li a {
                     cursor: pointer;
-                    display: block; /* Ensure the whole area is clickable */
-                    padding: 10px; /* Add padding to the clickable area */
-                    border-radius: 15px; /* Optional: Add some border radius for better aesthetics */
-                    color: #ffffff; /* Change text color to white */
+                    display: block; 
+                    padding: 10px; 
+                    border-radius: 15px; 
+                    color: #ffffff; 
                 }
 
         .slide-menu.show {
-            transform: translateX(0); /* Slide in when shown */
+            transform: translateX(0); 
         }
 
     .menu-toggle {
@@ -175,16 +168,11 @@
         }
 
         .menu-toggle.show i {
-            transform: rotate(180deg); /* Rotate icon when menu shown */
+            transform: rotate(180deg); 
         }
 
 
 
-
-
-
-
-    /* Modal styles */
     .modal-container {
         display: none;
         position: fixed;
@@ -221,9 +209,8 @@
         border-radius: 5px;
         cursor: pointer;
     }
-        /* Add hover animations to the buttons */
         .button:hover {
-            transform: scale(1.05); /* Scale the button slightly on hover */
+            transform: scale(1.05); 
             transition: transform 0.3s ease;
         }
 
@@ -234,7 +221,7 @@
     }
 
         .cancel-button:hover {
-            background-color: #bbb; /* Darken the background color on hover */
+            background-color: #bbb;
         }
 
     .delete-button {
@@ -243,7 +230,7 @@
     }
 
         .delete-button:hover {
-            background-color: #c0392b; /* Darken the background color on hover */
+            background-color: #c0392b; 
         }
 </style>
 
@@ -255,14 +242,10 @@
     </div>
 
 
-    <!-- Slide menu -->
     <div class="slide-menu" id="slideMenu">
         <ul>
-            <!-- Add menu items as needed -->
             <li><a href="/Authenticate/Login"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             <li><a href="/Class/GymClasses"><i class="fas fa-class"></i> Classes</a></li>
-@*            <li><a href="/Review/GymReviews/@((int)ViewBag.GymId)"><i class="fas fa-star"></i> Review</a></li>
-*@
         </ul>
     </div>
 
@@ -279,7 +262,6 @@
                     <p><strong>Date:</strong> @classObj.date.ToShortDateString()</p>
                     <p><strong>Time:</strong> @classObj.time.ToString()</p>
                     <button class="btn btn-danger" onclick="showDeleteConfirmation('@classObj.idcl')"><i class="fas fa-trash-alt"></i></button>
-                    <!-- Add other class details as needed -->
                 </div>
             }
         </div>
@@ -289,14 +271,13 @@
         <p style="text-align: center; font-size: 20px; color: #555; line-height: 1.5;">Hey there! Looks like you currently do not have any classes at your gyms... No worries, let's fix that! Click the button below to explore and add some classes to your gym.</p>
     }
 
-    <a class="menu-items" href="/Class/AddSpecificClass?idg=@ViewBag.GymId">
-        Add Specific Class
-    </a>
+    <div class="center-button">
+        <a class="menu-items" href="/Class/AddSpecificClass?idg=@ViewBag.GymId">
+            Add Specific Class
+        </a>
+    </div>
 
 
-
-
-    <!-- Delete Confirmation Modal -->
     <div id="deleteModal" class="modal-container">
         <div class="modal-content">
             <h2>Delete Confirmation</h2>
@@ -319,7 +300,6 @@
 
 
 <script>
-    // Function to toggle the slide menu
     function toggleSlideMenu() {
         var slideMenu = document.getElementById("slideMenu");
         slideMenu.classList.toggle("show");
@@ -329,9 +309,8 @@
         window.location.href = url;
     }
 
-    // Function to handle button click and redirect to add coach page
     function redirectToAddSpecificClass() {
-        var gymId = "@ViewBag.GymId"; // Assuming you set ViewBag.GymId in the controller
+        var gymId = "@ViewBag.GymId"; 
         window.location.href = "/Class/AddSpecificClass?idg=" + gymId;
     }
 
@@ -356,7 +335,6 @@
             url: "/Class/DeleteClass",
             data: { id: idcl },
             success: function () {
-                // Refresh the coach list (replace with your actual refresh logic)
                 location.reload();
             }
         });
@@ -366,7 +344,6 @@
         const modal = document.getElementById(modalId);
         modal.style.display = 'none';
     }
-
 
 
 </script>

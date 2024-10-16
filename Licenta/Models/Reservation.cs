@@ -6,16 +6,17 @@ namespace Licenta.Models
     public class Reservation
     {
         public int idr { get; set; }
-        public int idc { get; set; } // Foreign key for the client
-        public int idcl { get; set; } // Foreign key for the gym class
+        public int idc { get; set; } 
+        public int idcl { get; set; } 
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
 
-        // Navigation properties
-        public Customer Customer { get; set; } // Represents the related Client entity
-        public Classes Class { get; set; } // Represents the related GymClass entity
+        public Customer Customer { get; set; } 
+        public Classes Class { get; set; } 
 
-        public string CustomerEmail { get; set; } // Stores the coach's name
-        public string ClassName { get; set; } // Stores the class type's type
+        public string CustomerEmail { get; set; }
+        public string ClassName { get; set; } 
+        public DateTime ClassDate { get; set; }
+        public TimeSpan ClassTime { get; set; }
     }
 }

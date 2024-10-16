@@ -44,7 +44,6 @@
                     @if (HasPhoto(coach.photo))
                     {
                         <div>
-                            <!-- Displaying coach photo -->
                             <img src="data:image;base64,@Convert.ToBase64String(coach.photo)" alt="Coach Photo" width="100" height="100" />
                         </div>
                     }
@@ -59,7 +58,6 @@
 </div>
 
 <style>
-    /* Add your CSS styles here */
     .container {
         max-width: 1200px;
         margin: auto;
@@ -75,7 +73,7 @@
         padding: 20px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         margin-bottom: 30px;
-        text-align: center; /* Center text within gym-info */
+        text-align: center; 
     }
 
     .info-item {
@@ -111,7 +109,6 @@
 </style>
 
 @functions {
-    // Helper function to check if the coach's photo is available
     public bool HasPhoto(byte[] photo)
     {
         return photo != null && photo.Length > 0;

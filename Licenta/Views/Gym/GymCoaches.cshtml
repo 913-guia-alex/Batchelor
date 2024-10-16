@@ -6,7 +6,6 @@
 
 
 @functions {
-    // Helper function to check if the coach's photo is available
     public bool HasPhoto(byte[] photo)
     {
         return photo != null && photo.Length > 0;
@@ -50,32 +49,32 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1rem 1.5rem; /* Adjusted padding */
+        padding: 1rem 1.5rem; 
         background-color: white;
         border: none;
         font-size: 1.1rem;
         cursor: pointer;
-        border-radius: 13px !important; /* Remove button border-radius for a rectangular shape */
+        border-radius: 13px !important; 
     }
 
     .menu-items {
-        width: auto; /* Adjust width as needed */
+        width: auto; 
         height: auto;
         text-align: center;
-        margin: 20px auto; /* Center the button horizontally and add space around it */
-        background-color: #007bff; /* Button background color */
-        color: #ffffff; /* Button text color */
+        margin: 20px auto; 
+        background-color: #007bff; 
+        color: #ffffff; 
         border: none;
         font-size: 1.1rem;
         cursor: pointer;
-        border-radius: 13px; /* Apply border-radius for a rounded shape */
-        padding: 15px; /* Adjust padding as needed */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add box shadow */
-        transition: background-color 0.3s ease; /* Smooth transition for background color */
+        border-radius: 13px; 
+        padding: 15px; 
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+        transition: background-color 0.3s ease; 
     }
 
         .menu-items:hover {
-            background-color: #0056b3; /* Change background color on hover */
+            background-color: #0056b3; 
         }
 
     .gym-coaches {
@@ -106,7 +105,6 @@
             margin-bottom: 5px;
         }
 
-    /* Slide menu styles */
     .slide-menu {
         position: fixed;
         top: 50px;
@@ -117,37 +115,37 @@
         color: #000000;
         padding: 20px;
         box-sizing: border-box;
-        transition: transform 0.3s ease-in-out, left 0.3s ease-in-out; /* Add left transition */
+        transition: transform 0.3s ease-in-out, left 0.3s ease-in-out;
         z-index: 1000;
-        transform: translateX(-250px); /* Initially hidden */
+        transform: translateX(-250px);
     }
 
         .slide-menu ul {
             list-style: none;
             padding: 0;
-            margin: 0; /* Remove default margin */
+            margin: 0; 
         }
 
             .slide-menu ul li {
-                margin-bottom: 10px; /* Adjust the margin as needed */
-                padding-left: 0; /* Remove padding from the left */
-                border-bottom: 1px solid #ffffff; /* Add bottom border */
+                margin-bottom: 10px;
+                padding-left: 0;
+                border-bottom: 1px solid #ffffff; 
             }
 
                 .slide-menu ul li:last-child {
-                    border-bottom: none; /* Remove border from the last item */
+                    border-bottom: none; 
                 }
 
                 .slide-menu ul li a {
                     cursor: pointer;
-                    display: block; /* Ensure the whole area is clickable */
-                    padding: 10px; /* Add padding to the clickable area */
-                    border-radius: 15px; /* Optional: Add some border radius for better aesthetics */
-                    color: #ffffff; /* Change text color to white */
+                    display: block; 
+                    padding: 10px; 
+                    border-radius: 15px; 
+                    color: #ffffff; 
                 }
 
         .slide-menu.show {
-            transform: translateX(0); /* Slide in when shown */
+            transform: translateX(0);
         }
 
     .menu-toggle {
@@ -165,16 +163,10 @@
         }
 
         .menu-toggle.show i {
-            transform: rotate(180deg); /* Rotate icon when menu shown */
+            transform: rotate(180deg); 
         }
 
 
-
-
-
-
-
-    /* Modal styles */
     .modal-container {
         display: none;
         position: fixed;
@@ -211,9 +203,8 @@
         border-radius: 5px;
         cursor: pointer;
     }
-        /* Add hover animations to the buttons */
         .button:hover {
-            transform: scale(1.05); /* Scale the button slightly on hover */
+            transform: scale(1.05); 
             transition: transform 0.3s ease;
         }
 
@@ -224,7 +215,7 @@
     }
 
         .cancel-button:hover {
-            background-color: #bbb; /* Darken the background color on hover */
+            background-color: #bbb; 
         }
 
     .delete-button {
@@ -233,7 +224,7 @@
     }
 
         .delete-button:hover {
-            background-color: #c0392b; /* Darken the background color on hover */
+            background-color: #c0392b; 
         }
 </style>
 
@@ -246,10 +237,8 @@
     </div>
 
 
-    <!-- Slide menu -->
     <div class="slide-menu" id="slideMenu">
         <ul>
-            <!-- Add menu items as needed -->
             <li><a href="/Authenticate/Login"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             <li><a href="/Class/GymClasses/@((int)ViewBag.Gym.idg)"><i class="fas fa-class"></i> Classes</a></li>
             <li><a href="/Review/GymReviews/@((int)ViewBag.Gym.idg)"><i class="fas fa-star"></i> Review</a></li>
@@ -269,7 +258,6 @@
                     @if (HasPhoto(coach.photo))
                     {
                         <div>
-                            <!-- Displaying coach photo -->
                             <img src="data:image;base64,@Convert.ToBase64String(coach.photo)" alt="Coach Photo" width="100" height="100" />
                         </div>
                     }
@@ -293,32 +281,12 @@
         <i class="fas fa-user-plus"></i> Add New Coach
     </button>
 
-    @{
-        if (ViewBag.GymId == null)
-        {
-            <p>ViewBag.GymId is null</p>
-        }
-        else
-        {
-            <p>ViewBag.GymId: @ViewBag.GymId</p>
-        }
-    }
-
-    @if (ViewBag.GymId != null)
-    {
-        <a href="@Url.Action("AddSpecificClass", "Class", new { idg = ViewBag.GymId })">Add Specific Class</a>
-    }
-
     <button class="menu-items" onclick="redirectToClasses()">
         <i class="fas fa-user-plus"></i> Add New Classes
     </button>
 
 
 
-
-
-
-    <!-- Delete Confirmation Modal -->
     <div id="deleteModal" class="modal-container">
         <div class="modal-content">
             <h2>Delete Confirmation</h2>
@@ -340,7 +308,6 @@
 
 
 <script>
-    // Function to toggle the slide menu
     function toggleSlideMenu() {
         var slideMenu = document.getElementById("slideMenu");
         slideMenu.classList.toggle("show");
@@ -350,14 +317,13 @@
         window.location.href = url;
     }
 
-    // Function to handle button click and redirect to add coach page
     function redirectToAddCoach() {
-        var gymId = "@ViewBag.GymId"; // Assuming you set ViewBag.GymId in the controller
+        var gymId = "@ViewBag.GymId"; 
         window.location.href = "/Coach/AddCoach?gymId=" + gymId;
     }
 
         function redirectToClasses() {
-        var gymId = "@ViewBag.GymId"; // Assuming you set ViewBag.GymId in the controller
+        var gymId = "@ViewBag.GymId"; 
         window.location.href = "/Class/AddSpecificClass?idg=" + gymId;
     }
 
@@ -381,7 +347,6 @@
             url: "/Coach/DeleteCoach",
             data: { id: coachId },
             success: function () {
-                // Refresh the coach list (replace with your actual refresh logic)
                 location.reload();
             }
         });
@@ -391,7 +356,6 @@
         const modal = document.getElementById(modalId);
         modal.style.display = 'none';
     }
-
 
 
 </script>

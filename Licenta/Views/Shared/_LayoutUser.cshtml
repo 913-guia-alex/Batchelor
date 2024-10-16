@@ -13,7 +13,7 @@
         body {
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Prevent scrollbars due to the fixed background */
+            overflow: hidden; 
             background-color: #eff9ff;
             font-family: "Poppins";
         }
@@ -26,7 +26,7 @@
             height: 100vmin;
             border-radius: 47% 53% 61% 39% / 45% 51% 49% 55%;
             background: #65c8ff;
-            z-index: -1; /* Ensure the background is behind other content */
+            z-index: -1; 
         }
 
         .background::after {
@@ -42,7 +42,7 @@
 
         .content {
             padding: 20px;
-            z-index: 1; /* Ensure the content is above the background */
+            z-index: 1; 
         }
     </style>
 </head>
@@ -52,7 +52,6 @@
 
         <div class="content">
             @RenderBody()
-            <!-- Your content goes here -->
             <h1>Welcome to Your Website</h1>
             <p>This is a simple user layout with a beautiful background.</p>
         </div>
